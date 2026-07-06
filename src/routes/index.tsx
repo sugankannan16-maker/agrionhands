@@ -158,7 +158,7 @@ const t = {
     },
     footer: { rights: "© 2026 Agri on Hands. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை." },
   },
-} as const;
+};
 
 const cropData = [
   {
