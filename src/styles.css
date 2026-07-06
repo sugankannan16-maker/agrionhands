@@ -5,16 +5,19 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "Caveat", "Fraunces", cursive;
+  --font-tamil: "Noto Sans Tamil", "Inter", sans-serif;
 
+  --color-grass-50: var(--grass-50);
+  --color-grass-100: var(--grass-100);
+  --color-grass-200: var(--grass-200);
+  --color-grass-400: var(--grass-400);
+  --color-grass-600: var(--grass-600);
+  --color-grass-800: var(--grass-800);
+  --color-grass-900: var(--grass-900);
   --color-earth-50: var(--earth-50);
-  --color-earth-100: var(--earth-100);
-  --color-earth-200: var(--earth-200);
-  --color-moss-900: var(--moss-900);
-  --color-moss-800: var(--moss-800);
-  --color-moss-700: var(--moss-700);
-  --color-moss-600: var(--moss-600);
   --color-sun-500: var(--sun-500);
 
   --color-background: var(--background);
@@ -33,34 +36,35 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
   --earth-50: oklch(0.985 0.005 90);
-  --earth-100: oklch(0.965 0.008 90);
-  --earth-200: oklch(0.92 0.012 90);
-  --moss-900: oklch(0.19 0.018 120);
-  --moss-800: oklch(0.26 0.022 118);
-  --moss-700: oklch(0.35 0.028 115);
-  --moss-600: oklch(0.5 0.03 115);
-  --sun-500: oklch(0.68 0.16 55);
+  --grass-50: oklch(0.98 0.02 135);
+  --grass-100: oklch(0.95 0.05 135);
+  --grass-200: oklch(0.88 0.09 135);
+  --grass-400: oklch(0.72 0.17 138);
+  --grass-600: oklch(0.55 0.18 140);
+  --grass-800: oklch(0.35 0.11 140);
+  --grass-900: oklch(0.22 0.06 140);
+  --sun-500: oklch(0.78 0.16 90);
 
-  --background: var(--earth-50);
-  --foreground: var(--moss-900);
-  --card: var(--earth-100);
-  --card-foreground: var(--moss-900);
-  --primary: var(--moss-900);
-  --primary-foreground: var(--earth-50);
-  --muted: var(--earth-100);
-  --muted-foreground: var(--moss-700);
+  --background: var(--grass-50);
+  --foreground: var(--grass-900);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--grass-900);
+  --primary: var(--grass-800);
+  --primary-foreground: var(--grass-50);
+  --muted: var(--grass-100);
+  --muted-foreground: var(--grass-800);
   --accent: var(--sun-500);
-  --accent-foreground: var(--moss-900);
-  --border: oklch(0.19 0.018 120 / 8%);
-  --input: oklch(0.19 0.018 120 / 12%);
-  --ring: var(--sun-500);
-  --popover: var(--earth-50);
-  --popover-foreground: var(--moss-900);
-  --secondary: var(--earth-100);
-  --secondary-foreground: var(--moss-900);
+  --accent-foreground: var(--grass-900);
+  --border: oklch(0.35 0.11 140 / 12%);
+  --input: oklch(0.35 0.11 140 / 15%);
+  --ring: var(--grass-600);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--grass-900);
+  --secondary: var(--grass-100);
+  --secondary-foreground: var(--grass-900);
   --destructive: oklch(0.55 0.22 25);
   --destructive-foreground: var(--earth-50);
 }
@@ -74,5 +78,8 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+  }
+  :lang(ta) {
+    font-family: var(--font-tamil);
   }
 }

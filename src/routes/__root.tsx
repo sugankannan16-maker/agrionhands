@@ -77,34 +77,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Terraform AI — AI-Based Crop Yield Prediction & Optimization" },
+      { title: "Agri on Hands — AI Crop Yield Prediction & Optimization" },
       {
         name: "description",
         content:
-          "Precision yield forecasting powered by satellite imagery, soil analytics, and micro-climate AI. Grow more with less.",
+          "Bilingual (English / Tamil) AI platform for crop yield prediction, soil analytics, and precision farming — grow more with less.",
       },
-      { property: "og:title", content: "Terraform AI — Precision Crop Yield Intelligence" },
+      { property: "og:title", content: "Agri on Hands — Smart Farming, In Your Language" },
       {
         property: "og:description",
         content:
-          "Forecast harvests with 94% accuracy and optimize every acre with agronomist-grade AI.",
+          "Predict, optimize and act on your fields with AI. Available in English and தமிழ்.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      {
-        rel: "preconnect",
-        href: "https://fonts.googleapis.com",
-      },
-      {
-        rel: "preconnect",
-        href: "https://fonts.gstatic.com",
-        crossOrigin: "anonymous",
-      },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap",
       },
       {
         rel: "stylesheet",
