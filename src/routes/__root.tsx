@@ -83,14 +83,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Bilingual (English / Tamil) AI platform for crop yield prediction, soil analytics, and precision farming — grow more with less.",
       },
-      { property: "og:title", content: "Agri on Hands — Smart Farming, In Your Language" },
+      { property: "og:title", content: "Agri on Hands — AI Crop Yield Prediction & Optimization" },
       {
         property: "og:description",
         content:
-          "Predict, optimize and act on your fields with AI. Available in English and தமிழ்.",
+          "Bilingual (English / Tamil) AI platform for crop yield prediction, soil analytics, and precision farming — grow more with less.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Agri on Hands — AI Crop Yield Prediction & Optimization" },
+      { name: "twitter:description", content: "Bilingual (English / Tamil) AI platform for crop yield prediction, soil analytics, and precision farming — grow more with less." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e7df6fb8-131b-46a6-883b-1eaf3ab34e44" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e7df6fb8-131b-46a6-883b-1eaf3ab34e44" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -103,7 +107,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
