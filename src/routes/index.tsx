@@ -17,7 +17,44 @@ type Lang = "en" | "ta";
 
 const t = {
   en: {
-    nav: { features: "Features", crops: "Crops", how: "How it works", impact: "Impact" },
+    nav: { features: "Features", crops: "Crops", predict: "Predict", how: "How it works", impact: "Impact", contact: "Contact" },
+    predict: {
+      kicker: "AI Yield Prediction",
+      heading: "Forecast your harvest in seconds",
+      sub: "Enter your crop, location, soil profile and forecast window. Our model estimates yield, confidence and a smart advisory.",
+      crop: "Crop type",
+      cropPh: "Select a crop",
+      location: "Location / District",
+      locationPh: "e.g. Salem, Tamil Nadu",
+      area: "Field area (acres)",
+      soilType: "Soil type",
+      soilPh: "Select soil",
+      soilN: "Nitrogen (kg/ha)",
+      soilP: "Phosphorus (kg/ha)",
+      soilK: "Potassium (kg/ha)",
+      soilPH: "Soil pH",
+      rainfall: "Expected rainfall (mm)",
+      start: "Forecast start",
+      end: "Forecast end",
+      submit: "Predict yield",
+      reset: "Reset",
+      result: "Predicted yield",
+      perAcre: "per acre",
+      total: "Total harvest",
+      confidence: "Model confidence",
+      advisory: "Advisory",
+      soils: ["Loamy", "Clay", "Sandy", "Black cotton", "Red", "Alluvial"],
+    },
+    contact: {
+      kicker: "Contact",
+      heading: "Talk to our agronomy team",
+      sub: "We're based in Salem, Tamil Nadu and reply within one working day.",
+      phone: "Phone",
+      email: "Email",
+      location: "Location",
+      call: "Call now",
+      write: "Write to us",
+    },
     cta: "Request Demo",
     hero: {
       kicker: "Smart farming · powered by AI",
@@ -88,7 +125,44 @@ const t = {
     footer: { rights: "© 2026 Agri on Hands. All rights reserved." },
   },
   ta: {
-    nav: { features: "வசதிகள்", crops: "பயிர்கள்", how: "எப்படி இயங்குகிறது", impact: "தாக்கம்" },
+    nav: { features: "வசதிகள்", crops: "பயிர்கள்", predict: "முன்கணிப்பு", how: "எப்படி இயங்குகிறது", impact: "தாக்கம்", contact: "தொடர்பு" },
+    predict: {
+      kicker: "AI விளைச்சல் முன்கணிப்பு",
+      heading: "சில நொடிகளில் உங்கள் அறுவடையை கணிக்கவும்",
+      sub: "பயிர், இடம், மண் விவரம் மற்றும் முன்கணிப்பு காலத்தை உள்ளிடுங்கள். எங்கள் மாதிரி விளைச்சல், நம்பகத்தன்மை மற்றும் ஆலோசனையைக் காட்டும்.",
+      crop: "பயிர் வகை",
+      cropPh: "ஒரு பயிரைத் தேர்ந்தெடு",
+      location: "இடம் / மாவட்டம்",
+      locationPh: "எ.கா. சேலம், தமிழ்நாடு",
+      area: "நில பரப்பு (ஏக்கர்)",
+      soilType: "மண் வகை",
+      soilPh: "மண் தேர்ந்தெடு",
+      soilN: "நைட்ரஜன் (kg/ha)",
+      soilP: "பாஸ்பரஸ் (kg/ha)",
+      soilK: "பொட்டாசியம் (kg/ha)",
+      soilPH: "மண் pH",
+      rainfall: "எதிர்பார்க்கும் மழை (மிமீ)",
+      start: "முன்கணிப்பு தொடக்கம்",
+      end: "முன்கணிப்பு முடிவு",
+      submit: "விளைச்சலைக் கணி",
+      reset: "மீட்டமை",
+      result: "கணிக்கப்பட்ட விளைச்சல்",
+      perAcre: "ஏக்கருக்கு",
+      total: "மொத்த அறுவடை",
+      confidence: "மாதிரி நம்பகத்தன்மை",
+      advisory: "ஆலோசனை",
+      soils: ["களிமண்", "கடுங்களி", "மணல்", "கருஞ்சி", "சிவப்பு", "வண்டல்"],
+    },
+    contact: {
+      kicker: "தொடர்பு",
+      heading: "எங்கள் விவசாய குழுவை தொடர்பு கொள்ளுங்கள்",
+      sub: "நாங்கள் சேலம், தமிழ்நாட்டில் உள்ளோம். ஒரு வேலை நாளில் பதிலளிக்கிறோம்.",
+      phone: "தொலைபேசி",
+      email: "மின்னஞ்சல்",
+      location: "இடம்",
+      call: "இப்போது அழை",
+      write: "எங்களுக்கு எழுது",
+    },
     cta: "டெமோ கேளுங்கள்",
     hero: {
       kicker: "AI மூலம் இயங்கும் புத்திசாலி விவசாயம்",
@@ -259,9 +333,11 @@ function Index() {
       <Metrics c={c} isTa={isTa} />
       <Features c={c} isTa={isTa} />
       <Crops lang={lang} c={c} isTa={isTa} />
+      <Predict lang={lang} c={c} isTa={isTa} />
       <HowItWorks c={c} isTa={isTa} />
       <Testimonial c={c} isTa={isTa} />
       <CTA c={c} isTa={isTa} />
+      <Contact c={c} isTa={isTa} />
       <Footer c={c} />
     </div>
   );
@@ -310,8 +386,10 @@ function Nav({ lang, setLang, c }: { lang: Lang; setLang: (l: Lang) => void; c: 
         <div className="hidden lg:flex gap-8 text-sm font-medium text-grass-800">
           <a href="#features" className="hover:text-grass-900">{c.nav.features}</a>
           <a href="#crops" className="hover:text-grass-900">{c.nav.crops}</a>
+          <a href="#predict" className="hover:text-grass-900">{c.nav.predict}</a>
           <a href="#how" className="hover:text-grass-900">{c.nav.how}</a>
           <a href="#impact" className="hover:text-grass-900">{c.nav.impact}</a>
+          <a href="#contact" className="hover:text-grass-900">{c.nav.contact}</a>
         </div>
         <div className="flex items-center gap-3">
           <LangToggle lang={lang} setLang={setLang} />
@@ -640,6 +718,218 @@ function CTA({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
               </button>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean }) {
+  const cropKeys = cropData.map((cr) => ({ key: cr.key, name: cr[lang].name }));
+  // rough baseline yields (quintals/acre) for demo model
+  const baselines: Record<string, number> = {
+    rice: 22, wheat: 18, corn: 28, sugarcane: 380, cotton: 6, tomato: 120,
+  };
+  const [form, setForm] = useState({
+    crop: "rice",
+    location: "Salem, Tamil Nadu",
+    area: "5",
+    soil: c.predict.soils[0],
+    n: "80", p: "40", k: "40", ph: "6.5",
+    rainfall: "900",
+    start: "", end: "",
+  });
+  const [result, setResult] = useState<null | {
+    perAcre: number; total: number; confidence: number; advisory: string;
+  }>(null);
+
+  const update = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const base = baselines[form.crop] ?? 20;
+    const ph = parseFloat(form.ph) || 6.5;
+    const rain = parseFloat(form.rainfall) || 800;
+    const n = parseFloat(form.n) || 60;
+    const area = Math.max(0, parseFloat(form.area) || 0);
+    // simple multi-factor score
+    const phScore = 1 - Math.min(Math.abs(ph - 6.5) / 3, 0.35);
+    const rainScore = 1 - Math.min(Math.abs(rain - 900) / 1800, 0.3);
+    const nScore = Math.min(n / 80, 1.15);
+    const soilBoost = form.soil.toLowerCase().includes("loam") || form.soil.includes("களி") ? 1.08 : 1.0;
+    const perAcre = +(base * phScore * rainScore * nScore * soilBoost).toFixed(1);
+    const total = +(perAcre * area).toFixed(1);
+    const confidence = Math.round((phScore * rainScore) * 92 + 4);
+    const advisory = isTa
+      ? ph < 6
+        ? "மண் அமிலத்தன்மை அதிகம் — சுண்ணாம்பு சேர்க்கவும்."
+        : rain < 500
+          ? "மழை குறைவு — சொட்டு நீர்ப்பாசனம் பரிந்துரைக்கப்படுகிறது."
+          : "நிலைமைகள் சாதகமாக உள்ளன. தற்போதைய திட்டத்தைத் தொடருங்கள்."
+      : ph < 6
+        ? "Soil is acidic — consider liming before sowing."
+        : rain < 500
+          ? "Low rainfall expected — plan drip irrigation."
+          : "Conditions look favorable. Continue with current plan.";
+    setResult({ perAcre, total, confidence, advisory });
+  };
+
+  const reset = () => setResult(null);
+
+  const inputCls = "w-full bg-white ring-1 ring-grass-800/15 rounded-xl px-3.5 py-2.5 text-sm text-grass-900 placeholder:text-grass-600/60 focus:outline-none focus:ring-2 focus:ring-grass-600";
+  const labelCls = "text-[11px] font-semibold uppercase tracking-widest text-grass-600 mb-1.5 block";
+
+  return (
+    <section id="predict" className="py-20 md:py-28 px-4 md:px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="max-w-[54ch] mb-10">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-600">
+            {c.predict.kicker}
+          </span>
+          <h2 className={`${isTa ? "" : "font-serif"} text-3xl md:text-5xl mt-3 text-balance`}>
+            {c.predict.heading}
+          </h2>
+          <p className="text-grass-800 mt-3">{c.predict.sub}</p>
+        </div>
+
+        <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6">
+          <form onSubmit={onSubmit} className="bg-white p-6 md:p-8 rounded-3xl ring-1 ring-grass-800/10">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className={labelCls}>{c.predict.crop}</label>
+                <select className={inputCls} value={form.crop} onChange={(e) => update("crop", e.target.value)}>
+                  {cropKeys.map((cr) => (
+                    <option key={cr.key} value={cr.key}>{cr.name}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.location}</label>
+                <input className={inputCls} value={form.location} placeholder={c.predict.locationPh} onChange={(e) => update("location", e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.area}</label>
+                <input type="number" min="0" step="0.1" className={inputCls} value={form.area} onChange={(e) => update("area", e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.soilType}</label>
+                <select className={inputCls} value={form.soil} onChange={(e) => update("soil", e.target.value)}>
+                  {c.predict.soils.map((s) => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.soilN}</label>
+                <input type="number" className={inputCls} value={form.n} onChange={(e) => update("n", e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.soilP}</label>
+                <input type="number" className={inputCls} value={form.p} onChange={(e) => update("p", e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.soilK}</label>
+                <input type="number" className={inputCls} value={form.k} onChange={(e) => update("k", e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.soilPH}</label>
+                <input type="number" step="0.1" className={inputCls} value={form.ph} onChange={(e) => update("ph", e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>{c.predict.rainfall}</label>
+                <input type="number" className={inputCls} value={form.rainfall} onChange={(e) => update("rainfall", e.target.value)} />
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:col-span-1">
+                <div>
+                  <label className={labelCls}>{c.predict.start}</label>
+                  <input type="date" className={inputCls} value={form.start} onChange={(e) => update("start", e.target.value)} />
+                </div>
+                <div>
+                  <label className={labelCls}>{c.predict.end}</label>
+                  <input type="date" className={inputCls} value={form.end} onChange={(e) => update("end", e.target.value)} />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-3 mt-6">
+              <button type="submit" className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors inline-flex items-center gap-2">
+                {c.predict.submit} <span aria-hidden>→</span>
+              </button>
+              <button type="button" onClick={reset} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+                {c.predict.reset}
+              </button>
+            </div>
+          </form>
+
+          <aside className="bg-grass-800 text-grass-50 p-6 md:p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
+            {result ? (
+              <div className="space-y-5">
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-grass-200/70 font-semibold">{c.predict.result}</div>
+                  <div className={`${isTa ? "" : "font-serif"} text-5xl mt-1 text-sun-500`}>
+                    {result.perAcre}<span className="text-lg text-grass-50/80"> q/{c.predict.perAcre}</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 border-t border-grass-50/15 pt-4">
+                  <div>
+                    <div className="text-[10px] uppercase tracking-widest text-grass-200/70 font-semibold">{c.predict.total}</div>
+                    <div className={`${isTa ? "" : "font-serif"} text-2xl mt-1`}>{result.total} q</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase tracking-widest text-grass-200/70 font-semibold">{c.predict.confidence}</div>
+                    <div className={`${isTa ? "" : "font-serif"} text-2xl mt-1`}>{result.confidence}%</div>
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[10px] uppercase tracking-widest text-sun-500 font-semibold mb-1.5">{c.predict.advisory}</div>
+                  <p className="text-sm text-grass-50/90 leading-relaxed">{result.advisory}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="m-auto text-center text-grass-50/70 text-sm max-w-[28ch]">
+                <div className={`${isTa ? "" : "font-serif"} text-3xl text-sun-500 mb-3`}>—</div>
+                {c.predict.sub}
+              </div>
+            )}
+          </aside>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Contact({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
+  const phone = "9345475663";
+  const email = "brosugantheking153143@gmail.com";
+  const loc = "Salem, Tamil Nadu, India";
+  const items = [
+    { l: c.contact.phone, v: phone, href: `tel:${phone}` },
+    { l: c.contact.email, v: email, href: `mailto:${email}` },
+    { l: c.contact.location, v: loc, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}` },
+  ];
+  return (
+    <section id="contact" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/60">
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-start">
+        <div className="max-w-[52ch]">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-600">{c.contact.kicker}</span>
+          <h2 className={`${isTa ? "" : "font-serif"} text-3xl md:text-5xl mt-3 text-balance`}>{c.contact.heading}</h2>
+          <p className="text-grass-800 mt-3">{c.contact.sub}</p>
+          <div className="flex flex-wrap gap-3 mt-6">
+            <a href={`tel:${phone}`} className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors">
+              {c.contact.call}
+            </a>
+            <a href={`mailto:${email}`} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+              {c.contact.write}
+            </a>
+          </div>
+        </div>
+        <div className="grid gap-3">
+          {items.map((it) => (
+            <a key={it.l} href={it.href} target={it.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="bg-white ring-1 ring-grass-800/10 rounded-2xl p-5 flex items-center justify-between gap-4 hover:ring-grass-600/40 transition">
+              <div>
+                <div className="text-[10px] uppercase tracking-widest text-grass-600 font-semibold">{it.l}</div>
+                <div className={`${isTa ? "" : "font-serif"} text-lg md:text-xl text-grass-900 mt-0.5 break-all`}>{it.v}</div>
+              </div>
+              <span aria-hidden className="text-grass-600 text-xl">→</span>
+            </a>
+          ))}
         </div>
       </div>
     </section>
