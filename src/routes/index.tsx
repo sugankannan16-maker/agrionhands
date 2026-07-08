@@ -386,8 +386,10 @@ function Nav({ lang, setLang, c }: { lang: Lang; setLang: (l: Lang) => void; c: 
         <div className="hidden lg:flex gap-8 text-sm font-medium text-grass-800">
           <a href="#features" className="hover:text-grass-900">{c.nav.features}</a>
           <a href="#crops" className="hover:text-grass-900">{c.nav.crops}</a>
+          <a href="#predict" className="hover:text-grass-900">{c.nav.predict}</a>
           <a href="#how" className="hover:text-grass-900">{c.nav.how}</a>
           <a href="#impact" className="hover:text-grass-900">{c.nav.impact}</a>
+          <a href="#contact" className="hover:text-grass-900">{c.nav.contact}</a>
         </div>
         <div className="flex items-center gap-3">
           <LangToggle lang={lang} setLang={setLang} />
