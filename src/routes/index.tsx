@@ -333,9 +333,11 @@ function Index() {
       <Metrics c={c} isTa={isTa} />
       <Features c={c} isTa={isTa} />
       <Crops lang={lang} c={c} isTa={isTa} />
+      <Predict lang={lang} c={c} isTa={isTa} />
       <HowItWorks c={c} isTa={isTa} />
       <Testimonial c={c} isTa={isTa} />
       <CTA c={c} isTa={isTa} />
+      <Contact c={c} isTa={isTa} />
       <Footer c={c} />
     </div>
   );
