@@ -1,5 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
+import Reveal from "@/components/nature/Reveal";
+import type { Weather } from "@/components/nature/NatureBackground";
+
+const NatureBackground = lazy(() => import("@/components/nature/NatureBackground"));
+const LeafCursor = lazy(() => import("@/components/nature/LeafCursor"));
+
 import heroGrass from "@/assets/hero-grass.jpg";
 import farmerPortrait from "@/assets/farmer-portrait.jpg";
 import cropRice from "@/assets/crop-rice.jpg";
