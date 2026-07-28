@@ -329,25 +329,31 @@ const cropData = [
 
 function Index() {
   const [lang, setLang] = useState<Lang>("en");
+  const [weather, setWeather] = useState<Weather>("sunny");
   const c = t[lang];
   const isTa = lang === "ta";
 
   return (
-    <div lang={lang} className="font-sans text-grass-900 bg-grass-50">
-      <Nav lang={lang} setLang={setLang} c={c} />
+    <div lang={lang} className="font-sans text-grass-900 relative">
+      <Suspense fallback={null}>
+        <NatureBackground weather={weather} />
+        <LeafCursor />
+      </Suspense>
+      <Nav lang={lang} setLang={setLang} c={c} weather={weather} setWeather={setWeather} />
       <Hero c={c} isTa={isTa} />
-      <Metrics c={c} isTa={isTa} />
-      <Features c={c} isTa={isTa} />
-      <Crops lang={lang} c={c} isTa={isTa} />
-      <Predict lang={lang} c={c} isTa={isTa} />
-      <HowItWorks c={c} isTa={isTa} />
-      <Testimonial c={c} isTa={isTa} />
-      <CTA c={c} isTa={isTa} />
-      <Contact c={c} isTa={isTa} />
+      <Reveal><Metrics c={c} isTa={isTa} /></Reveal>
+      <Reveal><Features c={c} isTa={isTa} /></Reveal>
+      <Reveal><Crops lang={lang} c={c} isTa={isTa} /></Reveal>
+      <Reveal><Predict lang={lang} c={c} isTa={isTa} /></Reveal>
+      <Reveal><HowItWorks c={c} isTa={isTa} /></Reveal>
+      <Reveal><Testimonial c={c} isTa={isTa} /></Reveal>
+      <Reveal><CTA c={c} isTa={isTa} /></Reveal>
+      <Reveal><Contact c={c} isTa={isTa} /></Reveal>
       <Footer c={c} />
     </div>
   );
 }
+
 
 function LangToggle({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
   return (
