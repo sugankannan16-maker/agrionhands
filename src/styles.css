@@ -406,3 +406,16 @@
     transform-origin: left;
   }
 }
+
+/* Keep content readable at night: soft veil above the dark sky layer */
+.nature-bg[data-weather="night"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--grass-50) 62%, transparent) 0%,
+    color-mix(in oklab, var(--grass-50) 78%, transparent) 100%
+  );
+  pointer-events: none;
+}
