@@ -453,7 +453,7 @@ function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
         {[
           "left-[6%] top-[18%]", "left-[28%] top-[8%]", "right-[18%] top-[26%]",
           "right-[6%] bottom-[18%]", "left-[14%] bottom-[10%]",
-        ].map((pos, i) => (
+        ].map((pos) => (
           <LeafIcon
             key={pos}
             className={`absolute ${pos} size-6 md:size-8 text-grass-600/35 float-slow`}
@@ -533,7 +533,7 @@ function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
 
 function Metrics({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
-    <section id="impact" className="py-20 px-4 md:px-6 bg-grass-800 text-grass-50">
+    <section id="impact" className="py-20 px-4 md:px-6 bg-grass-800/90 text-grass-50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <h2 className={`${isTa ? "" : "font-serif"} text-3xl md:text-4xl mb-12 max-w-[24ch] text-balance`}>
           {c.metrics.heading}
@@ -583,7 +583,7 @@ function Features({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
           {cards.map((f, i) => (
             <div
               key={i}
-              className={`group bg-white p-6 md:p-7 rounded-2xl ring-1 ring-grass-800/8 hover:ring-grass-600/40 hover:-translate-y-0.5 transition ${i < 2 ? "md:col-span-3" : "md:col-span-2"}`}
+              className={`group glass p-6 md:p-7 rounded-2xl lift-card ${i < 2 ? "md:col-span-3" : "md:col-span-2"}`}
             >
               <div className="p-2.5 bg-grass-100 text-grass-800 rounded-xl w-fit">{f.icon}</div>
               <h3 className={`${isTa ? "" : "font-serif"} text-xl md:text-2xl mt-4`}>{f.t}</h3>
@@ -599,7 +599,7 @@ function Features({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
 function Crops({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean }) {
   const [active, setActive] = useState<string | null>(null);
   return (
-    <section id="crops" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/60">
+    <section id="crops" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/45 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
           <div className="max-w-[54ch]">
@@ -711,7 +711,7 @@ function HowItWorks({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
         </div>
         <ol className="grid md:grid-cols-3 gap-5">
           {c.how.steps.map((s, i) => (
-            <li key={i} className="bg-white p-7 rounded-2xl ring-1 ring-grass-800/8 space-y-3">
+            <li key={i} className="glass p-7 rounded-2xl lift-card space-y-3">
               <div className={`${isTa ? "" : "font-serif"} text-5xl text-grass-600`}>
                 0{i + 1}
               </div>
@@ -727,7 +727,7 @@ function HowItWorks({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
 
 function Testimonial({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
-    <section className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/50">
+    <section className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/40 backdrop-blur-sm">
       <div className="max-w-3xl mx-auto text-center space-y-6">
         <img
           src={farmerPortrait}
@@ -835,7 +835,7 @@ function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean 
 
   const reset = () => setResult(null);
 
-  const inputCls = "w-full bg-white ring-1 ring-grass-800/15 rounded-xl px-3.5 py-2.5 text-sm text-grass-900 placeholder:text-grass-600/60 focus:outline-none focus:ring-2 focus:ring-grass-600";
+  const inputCls = "w-full bg-white/80 ring-1 ring-grass-800/15 rounded-xl px-3.5 py-2.5 text-sm text-grass-900 placeholder:text-grass-600/60 focus:outline-none focus:ring-2 focus:ring-grass-600";
   const labelCls = "text-[11px] font-semibold uppercase tracking-widest text-grass-600 mb-1.5 block";
 
   return (
@@ -852,7 +852,7 @@ function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean 
         </div>
 
         <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6">
-          <form onSubmit={onSubmit} className="bg-white p-6 md:p-8 rounded-3xl ring-1 ring-grass-800/10">
+          <form onSubmit={onSubmit} className="glass p-6 md:p-8 rounded-3xl">
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className={labelCls}>{c.predict.crop}</label>
@@ -917,7 +917,7 @@ function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean 
             </div>
           </form>
 
-          <aside className="bg-grass-800 text-grass-50 p-6 md:p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
+          <aside className="glass-dark text-grass-50 p-6 md:p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
             {result ? (
               <div className="space-y-5">
                 <div>
@@ -964,7 +964,7 @@ function Contact({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
     { l: c.contact.location, v: loc, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}` },
   ];
   return (
-    <section id="contact" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/60">
+    <section id="contact" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/45 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-start">
         <div className="max-w-[52ch]">
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-600">{c.contact.kicker}</span>
@@ -981,7 +981,7 @@ function Contact({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
         </div>
         <div className="grid gap-3">
           {items.map((it) => (
-            <a key={it.l} href={it.href} target={it.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="bg-white ring-1 ring-grass-800/10 rounded-2xl p-5 flex items-center justify-between gap-4 hover:ring-grass-600/40 transition">
+            <a key={it.l} href={it.href} target={it.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="glass rounded-2xl p-5 flex items-center justify-between gap-4 lift-card">
               <div>
                 <div className="text-[10px] uppercase tracking-widest text-grass-600 font-semibold">{it.l}</div>
                 <div className={`${isTa ? "" : "font-serif"} text-lg md:text-xl text-grass-900 mt-0.5 break-all`}>{it.v}</div>
