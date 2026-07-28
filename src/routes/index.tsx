@@ -1,5 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
+import Reveal from "@/components/nature/Reveal";
+import type { Weather } from "@/components/nature/NatureBackground";
+
+const NatureBackground = lazy(() => import("@/components/nature/NatureBackground"));
+const LeafCursor = lazy(() => import("@/components/nature/LeafCursor"));
+
 import heroGrass from "@/assets/hero-grass.jpg";
 import farmerPortrait from "@/assets/farmer-portrait.jpg";
 import cropRice from "@/assets/crop-rice.jpg";
@@ -323,25 +329,31 @@ const cropData = [
 
 function Index() {
   const [lang, setLang] = useState<Lang>("en");
+  const [weather, setWeather] = useState<Weather>("sunny");
   const c = t[lang];
   const isTa = lang === "ta";
 
   return (
-    <div lang={lang} className="font-sans text-grass-900 bg-grass-50">
-      <Nav lang={lang} setLang={setLang} c={c} />
+    <div lang={lang} className="font-sans text-grass-900 relative">
+      <Suspense fallback={null}>
+        <NatureBackground weather={weather} />
+        <LeafCursor />
+      </Suspense>
+      <Nav lang={lang} setLang={setLang} c={c} weather={weather} setWeather={setWeather} />
       <Hero c={c} isTa={isTa} />
-      <Metrics c={c} isTa={isTa} />
-      <Features c={c} isTa={isTa} />
-      <Crops lang={lang} c={c} isTa={isTa} />
-      <Predict lang={lang} c={c} isTa={isTa} />
-      <HowItWorks c={c} isTa={isTa} />
-      <Testimonial c={c} isTa={isTa} />
-      <CTA c={c} isTa={isTa} />
-      <Contact c={c} isTa={isTa} />
+      <Reveal><Metrics c={c} isTa={isTa} /></Reveal>
+      <Reveal><Features c={c} isTa={isTa} /></Reveal>
+      <Reveal><Crops lang={lang} c={c} isTa={isTa} /></Reveal>
+      <Reveal><Predict lang={lang} c={c} isTa={isTa} /></Reveal>
+      <Reveal><HowItWorks c={c} isTa={isTa} /></Reveal>
+      <Reveal><Testimonial c={c} isTa={isTa} /></Reveal>
+      <Reveal><CTA c={c} isTa={isTa} /></Reveal>
+      <Reveal><Contact c={c} isTa={isTa} /></Reveal>
       <Footer c={c} />
     </div>
   );
 }
+
 
 function LangToggle({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
   return (
@@ -378,22 +390,52 @@ function Logo() {
   );
 }
 
-function Nav({ lang, setLang, c }: { lang: Lang; setLang: (l: Lang) => void; c: typeof t.en }) {
+const weatherIcons: Record<Weather, string> = { sunny: "☀", cloudy: "☁", rainy: "☂", night: "☾" };
+
+function WeatherSwitch({ weather, setWeather }: { weather: Weather; setWeather: (w: Weather) => void }) {
   return (
-    <nav className="sticky top-0 z-50 bg-grass-50/85 backdrop-blur-md border-b border-grass-800/10">
+    <div className="inline-flex items-center rounded-full glass p-1 text-sm" role="group" aria-label="Scene weather">
+      {(Object.keys(weatherIcons) as Weather[]).map((w) => (
+        <button
+          key={w}
+          type="button"
+          onClick={() => setWeather(w)}
+          aria-pressed={weather === w}
+          aria-label={w}
+          title={w}
+          className={`size-7 grid place-items-center rounded-full transition-all duration-300 ${
+            weather === w ? "bg-grass-800 text-sun-500 scale-105" : "text-grass-800 hover:bg-grass-100"
+          }`}
+        >
+          <span aria-hidden>{weatherIcons[w]}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function Nav({
+  lang, setLang, c, weather, setWeather,
+}: {
+  lang: Lang; setLang: (l: Lang) => void; c: typeof t.en;
+  weather: Weather; setWeather: (w: Weather) => void;
+}) {
+  return (
+    <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
       <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-3">
         <Logo />
         <div className="hidden lg:flex gap-8 text-sm font-medium text-grass-800">
-          <a href="#features" className="hover:text-grass-900">{c.nav.features}</a>
-          <a href="#crops" className="hover:text-grass-900">{c.nav.crops}</a>
-          <a href="#predict" className="hover:text-grass-900">{c.nav.predict}</a>
-          <a href="#how" className="hover:text-grass-900">{c.nav.how}</a>
-          <a href="#impact" className="hover:text-grass-900">{c.nav.impact}</a>
-          <a href="#contact" className="hover:text-grass-900">{c.nav.contact}</a>
+          <a href="#features" className="story-link hover:text-grass-900">{c.nav.features}</a>
+          <a href="#crops" className="story-link hover:text-grass-900">{c.nav.crops}</a>
+          <a href="#predict" className="story-link hover:text-grass-900">{c.nav.predict}</a>
+          <a href="#how" className="story-link hover:text-grass-900">{c.nav.how}</a>
+          <a href="#impact" className="story-link hover:text-grass-900">{c.nav.impact}</a>
+          <a href="#contact" className="story-link hover:text-grass-900">{c.nav.contact}</a>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="hidden md:block"><WeatherSwitch weather={weather} setWeather={setWeather} /></div>
           <LangToggle lang={lang} setLang={setLang} />
-          <button className="hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 transition-colors">
+          <button className="ripple-btn hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900">
             {c.cta}
           </button>
         </div>
@@ -402,42 +444,57 @@ function Nav({ lang, setLang, c }: { lang: Lang; setLang: (l: Lang) => void; c: 
   );
 }
 
+
 function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
-    <section className="py-12 lg:py-20 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative py-14 lg:py-24 px-4 md:px-6 overflow-hidden">
+      {/* floating leaves around the hero */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        {[
+          "left-[6%] top-[18%]", "left-[28%] top-[8%]", "right-[18%] top-[26%]",
+          "right-[6%] bottom-[18%]", "left-[14%] bottom-[10%]",
+        ].map((pos) => (
+          <LeafIcon
+            key={pos}
+            className={`absolute ${pos} size-6 md:size-8 text-grass-600/35 float-slow`}
+          />
+        ))}
+      </div>
+
+      <div className="max-w-7xl mx-auto relative">
         <div className="grid lg:grid-cols-[1fr_340px] gap-10 items-end">
-          <div className="space-y-6">
-            <span className="inline-block text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-600">
+          <div className="space-y-6 reveal is-visible">
+            <span className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-800">
+              <span className="size-1.5 rounded-full bg-grass-600 animate-pulse" />
               {c.hero.kicker}
             </span>
-            <h1 className={`${isTa ? "" : "font-serif"} text-4xl md:text-6xl lg:text-7xl leading-[1.05] text-balance`}>
+            <h1 className={`${isTa ? "" : "font-serif"} text-4xl md:text-6xl lg:text-7xl leading-[1.05] text-balance text-leaf-gradient`}>
               {c.hero.title1}{" "}
-              <span className="italic text-grass-600">{c.hero.title2}</span>
+              <span className="italic">{c.hero.title2}</span>
             </h1>
-            <p className="text-base md:text-lg text-grass-800 max-w-[54ch] text-pretty">
+            <p className="text-base md:text-lg text-grass-800 max-w-[54ch] text-pretty soft-shadow-text">
               {c.hero.body}
             </p>
             <div className="flex flex-wrap gap-3">
-              <button className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors inline-flex items-center gap-2">
+              <button className="ripple-btn bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 inline-flex items-center gap-2">
                 {c.hero.primary}
                 <span aria-hidden>→</span>
               </button>
-              <button className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+              <button className="ripple-btn glass text-grass-900 text-sm font-medium py-3 px-5 rounded-full">
                 {c.hero.secondary}
               </button>
             </div>
           </div>
 
           <aside className="space-y-4">
-            <div className="p-5 bg-white ring-1 ring-grass-800/10 rounded-2xl shadow-sm">
+            <div className="p-5 glass rounded-2xl lift-card float-slow">
               <span className="text-[10px] font-semibold uppercase tracking-widest text-grass-600">
                 {c.hero.side1Label}
               </span>
               <div className="mt-1 font-serif text-3xl">₹2,340<span className="text-base text-grass-600">/qtl</span></div>
               <div className="mt-1 text-sm text-grass-600 font-medium">{c.hero.side1Sub}</div>
             </div>
-            <div className="p-5 bg-grass-800 text-grass-50 rounded-2xl">
+            <div className="p-5 glass-dark text-grass-50 rounded-2xl lift-card">
               <span className="text-[10px] font-semibold uppercase tracking-widest text-grass-200/70">
                 {c.hero.side2Label}
               </span>
@@ -449,20 +506,21 @@ function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
           </aside>
         </div>
 
-        <div className="mt-12 relative overflow-hidden rounded-3xl ring-1 ring-grass-800/10">
+        <div className="mt-12 relative overflow-hidden rounded-3xl ring-1 ring-grass-800/10 lift-card">
           <img
             src={heroGrass}
             alt="Lush green grass field with morning dew"
             width={1920}
             height={1024}
-            className="w-full h-[320px] md:h-[500px] object-cover"
+            fetchPriority="high"
+            className="w-full h-[320px] md:h-[520px] object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-grass-900/50 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-grass-900/55 via-transparent to-transparent" />
           <div className="absolute bottom-5 left-5 right-5 flex flex-wrap gap-3 justify-between text-grass-50">
-            <span className="text-[10px] font-mono uppercase tracking-widest bg-grass-900/60 backdrop-blur px-3 py-1.5 rounded-full">
+            <span className="text-[10px] font-mono uppercase tracking-widest glass-dark px-3 py-1.5 rounded-full">
               {c.hero.chip1}
             </span>
-            <span className="text-[10px] font-mono uppercase tracking-widest bg-grass-900/60 backdrop-blur px-3 py-1.5 rounded-full">
+            <span className="text-[10px] font-mono uppercase tracking-widest glass-dark px-3 py-1.5 rounded-full">
               {c.hero.chip2}
             </span>
           </div>
@@ -472,9 +530,10 @@ function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   );
 }
 
+
 function Metrics({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
-    <section id="impact" className="py-20 px-4 md:px-6 bg-grass-800 text-grass-50">
+    <section id="impact" className="py-20 px-4 md:px-6 bg-grass-800/90 text-grass-50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <h2 className={`${isTa ? "" : "font-serif"} text-3xl md:text-4xl mb-12 max-w-[24ch] text-balance`}>
           {c.metrics.heading}
@@ -524,7 +583,7 @@ function Features({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
           {cards.map((f, i) => (
             <div
               key={i}
-              className={`group bg-white p-6 md:p-7 rounded-2xl ring-1 ring-grass-800/8 hover:ring-grass-600/40 hover:-translate-y-0.5 transition ${i < 2 ? "md:col-span-3" : "md:col-span-2"}`}
+              className={`group glass p-6 md:p-7 rounded-2xl lift-card ${i < 2 ? "md:col-span-3" : "md:col-span-2"}`}
             >
               <div className="p-2.5 bg-grass-100 text-grass-800 rounded-xl w-fit">{f.icon}</div>
               <h3 className={`${isTa ? "" : "font-serif"} text-xl md:text-2xl mt-4`}>{f.t}</h3>
@@ -540,7 +599,7 @@ function Features({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
 function Crops({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean }) {
   const [active, setActive] = useState<string | null>(null);
   return (
-    <section id="crops" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/60">
+    <section id="crops" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/45 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 gap-4">
           <div className="max-w-[54ch]">
@@ -552,7 +611,7 @@ function Crops({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean })
             </h2>
             <p className="text-grass-800 mt-3 max-w-[52ch]">{c.crops.sub}</p>
           </div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-grass-600 bg-white px-3 py-1.5 rounded-full ring-1 ring-grass-800/10">
+          <span className="text-xs font-semibold uppercase tracking-widest text-grass-600 glass px-3 py-1.5 rounded-full">
             {c.crops.hint}
           </span>
         </div>
@@ -568,7 +627,7 @@ function Crops({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean })
                 onClick={() => setActive(isActive ? null : crop.key)}
                 onMouseEnter={() => setActive(crop.key)}
                 onMouseLeave={() => setActive((prev) => (prev === crop.key ? null : prev))}
-                className="group relative overflow-hidden rounded-2xl aspect-[4/5] text-left ring-1 ring-grass-800/10 focus:outline-none focus:ring-2 focus:ring-grass-600"
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5] text-left ring-1 ring-grass-800/10 lift-card focus:outline-none focus:ring-2 focus:ring-grass-600"
                 aria-expanded={isActive}
               >
                 <img
@@ -652,7 +711,7 @@ function HowItWorks({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
         </div>
         <ol className="grid md:grid-cols-3 gap-5">
           {c.how.steps.map((s, i) => (
-            <li key={i} className="bg-white p-7 rounded-2xl ring-1 ring-grass-800/8 space-y-3">
+            <li key={i} className="glass p-7 rounded-2xl lift-card space-y-3">
               <div className={`${isTa ? "" : "font-serif"} text-5xl text-grass-600`}>
                 0{i + 1}
               </div>
@@ -668,7 +727,7 @@ function HowItWorks({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
 
 function Testimonial({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
-    <section className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/50">
+    <section className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/40 backdrop-blur-sm">
       <div className="max-w-3xl mx-auto text-center space-y-6">
         <img
           src={farmerPortrait}
@@ -710,10 +769,10 @@ function CTA({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
             </h2>
             <p className="text-grass-50/85 max-w-[42ch] mx-auto">{c.cta2.body}</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-1">
-              <button className="bg-sun-500 text-grass-900 text-sm font-semibold py-3 px-5 rounded-full hover:brightness-95 transition-all">
+              <button className="bg-sun-500 text-grass-900 text-sm font-semibold py-3 px-5 rounded-full ripple-btn">
                 {c.cta2.primary}
               </button>
-              <button className="text-grass-50 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-50/25 hover:bg-grass-50/10 transition-colors">
+              <button className="text-grass-50 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-50/25 ripple-btn">
                 {c.cta2.secondary}
               </button>
             </div>
@@ -776,7 +835,7 @@ function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean 
 
   const reset = () => setResult(null);
 
-  const inputCls = "w-full bg-white ring-1 ring-grass-800/15 rounded-xl px-3.5 py-2.5 text-sm text-grass-900 placeholder:text-grass-600/60 focus:outline-none focus:ring-2 focus:ring-grass-600";
+  const inputCls = "w-full bg-white/80 ring-1 ring-grass-800/15 rounded-xl px-3.5 py-2.5 text-sm text-grass-900 placeholder:text-grass-600/60 focus:outline-none focus:ring-2 focus:ring-grass-600";
   const labelCls = "text-[11px] font-semibold uppercase tracking-widest text-grass-600 mb-1.5 block";
 
   return (
@@ -793,7 +852,7 @@ function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean 
         </div>
 
         <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6">
-          <form onSubmit={onSubmit} className="bg-white p-6 md:p-8 rounded-3xl ring-1 ring-grass-800/10">
+          <form onSubmit={onSubmit} className="glass p-6 md:p-8 rounded-3xl">
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className={labelCls}>{c.predict.crop}</label>
@@ -849,16 +908,16 @@ function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean 
               </div>
             </div>
             <div className="flex flex-wrap gap-3 mt-6">
-              <button type="submit" className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors inline-flex items-center gap-2">
+              <button type="submit" className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 ripple-btn inline-flex items-center gap-2">
                 {c.predict.submit} <span aria-hidden>→</span>
               </button>
-              <button type="button" onClick={reset} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+              <button type="button" onClick={reset} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full glass ripple-btn">
                 {c.predict.reset}
               </button>
             </div>
           </form>
 
-          <aside className="bg-grass-800 text-grass-50 p-6 md:p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
+          <aside className="glass-dark text-grass-50 p-6 md:p-8 rounded-3xl flex flex-col justify-between min-h-[320px]">
             {result ? (
               <div className="space-y-5">
                 <div>
@@ -905,24 +964,24 @@ function Contact({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
     { l: c.contact.location, v: loc, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}` },
   ];
   return (
-    <section id="contact" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/60">
+    <section id="contact" className="py-20 md:py-28 px-4 md:px-6 bg-grass-100/45 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-start">
         <div className="max-w-[52ch]">
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-600">{c.contact.kicker}</span>
           <h2 className={`${isTa ? "" : "font-serif"} text-3xl md:text-5xl mt-3 text-balance`}>{c.contact.heading}</h2>
           <p className="text-grass-800 mt-3">{c.contact.sub}</p>
           <div className="flex flex-wrap gap-3 mt-6">
-            <a href={`tel:${phone}`} className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors">
+            <a href={`tel:${phone}`} className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 ripple-btn">
               {c.contact.call}
             </a>
-            <a href={`mailto:${email}`} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+            <a href={`mailto:${email}`} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full glass ripple-btn">
               {c.contact.write}
             </a>
           </div>
         </div>
         <div className="grid gap-3">
           {items.map((it) => (
-            <a key={it.l} href={it.href} target={it.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="bg-white ring-1 ring-grass-800/10 rounded-2xl p-5 flex items-center justify-between gap-4 hover:ring-grass-600/40 transition">
+            <a key={it.l} href={it.href} target={it.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="glass rounded-2xl p-5 flex items-center justify-between gap-4 lift-card">
               <div>
                 <div className="text-[10px] uppercase tracking-widest text-grass-600 font-semibold">{it.l}</div>
                 <div className={`${isTa ? "" : "font-serif"} text-lg md:text-xl text-grass-900 mt-0.5 break-all`}>{it.v}</div>
