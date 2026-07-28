@@ -611,7 +611,7 @@ function Crops({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean })
             </h2>
             <p className="text-grass-800 mt-3 max-w-[52ch]">{c.crops.sub}</p>
           </div>
-          <span className="text-xs font-semibold uppercase tracking-widest text-grass-600 bg-white px-3 py-1.5 rounded-full ring-1 ring-grass-800/10">
+          <span className="text-xs font-semibold uppercase tracking-widest text-grass-600 glass px-3 py-1.5 rounded-full">
             {c.crops.hint}
           </span>
         </div>
@@ -627,7 +627,7 @@ function Crops({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean })
                 onClick={() => setActive(isActive ? null : crop.key)}
                 onMouseEnter={() => setActive(crop.key)}
                 onMouseLeave={() => setActive((prev) => (prev === crop.key ? null : prev))}
-                className="group relative overflow-hidden rounded-2xl aspect-[4/5] text-left ring-1 ring-grass-800/10 focus:outline-none focus:ring-2 focus:ring-grass-600"
+                className="group relative overflow-hidden rounded-2xl aspect-[4/5] text-left ring-1 ring-grass-800/10 lift-card focus:outline-none focus:ring-2 focus:ring-grass-600"
                 aria-expanded={isActive}
               >
                 <img
@@ -769,10 +769,10 @@ function CTA({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
             </h2>
             <p className="text-grass-50/85 max-w-[42ch] mx-auto">{c.cta2.body}</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center pt-1">
-              <button className="bg-sun-500 text-grass-900 text-sm font-semibold py-3 px-5 rounded-full hover:brightness-95 transition-all">
+              <button className="bg-sun-500 text-grass-900 text-sm font-semibold py-3 px-5 rounded-full ripple-btn">
                 {c.cta2.primary}
               </button>
-              <button className="text-grass-50 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-50/25 hover:bg-grass-50/10 transition-colors">
+              <button className="text-grass-50 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-50/25 ripple-btn">
                 {c.cta2.secondary}
               </button>
             </div>
@@ -908,10 +908,10 @@ function Predict({ lang, c, isTa }: { lang: Lang; c: typeof t.en; isTa: boolean 
               </div>
             </div>
             <div className="flex flex-wrap gap-3 mt-6">
-              <button type="submit" className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors inline-flex items-center gap-2">
+              <button type="submit" className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 ripple-btn inline-flex items-center gap-2">
                 {c.predict.submit} <span aria-hidden>→</span>
               </button>
-              <button type="button" onClick={reset} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+              <button type="button" onClick={reset} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full glass ripple-btn">
                 {c.predict.reset}
               </button>
             </div>
@@ -971,10 +971,10 @@ function Contact({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
           <h2 className={`${isTa ? "" : "font-serif"} text-3xl md:text-5xl mt-3 text-balance`}>{c.contact.heading}</h2>
           <p className="text-grass-800 mt-3">{c.contact.sub}</p>
           <div className="flex flex-wrap gap-3 mt-6">
-            <a href={`tel:${phone}`} className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors">
+            <a href={`tel:${phone}`} className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 ripple-btn">
               {c.contact.call}
             </a>
-            <a href={`mailto:${email}`} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+            <a href={`mailto:${email}`} className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full glass ripple-btn">
               {c.contact.write}
             </a>
           </div>
