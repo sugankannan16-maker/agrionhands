@@ -447,40 +447,54 @@ function Nav({
 
 function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
-    <section className="py-12 lg:py-20 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative py-14 lg:py-24 px-4 md:px-6 overflow-hidden">
+      {/* floating leaves around the hero */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        {[
+          "left-[6%] top-[18%]", "left-[28%] top-[8%]", "right-[18%] top-[26%]",
+          "right-[6%] bottom-[18%]", "left-[14%] bottom-[10%]",
+        ].map((pos, i) => (
+          <LeafIcon
+            key={pos}
+            className={`absolute ${pos} size-6 md:size-8 text-grass-600/35 float-slow`}
+          />
+        ))}
+      </div>
+
+      <div className="max-w-7xl mx-auto relative">
         <div className="grid lg:grid-cols-[1fr_340px] gap-10 items-end">
-          <div className="space-y-6">
-            <span className="inline-block text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-600">
+          <div className="space-y-6 reveal is-visible">
+            <span className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-800">
+              <span className="size-1.5 rounded-full bg-grass-600 animate-pulse" />
               {c.hero.kicker}
             </span>
-            <h1 className={`${isTa ? "" : "font-serif"} text-4xl md:text-6xl lg:text-7xl leading-[1.05] text-balance`}>
+            <h1 className={`${isTa ? "" : "font-serif"} text-4xl md:text-6xl lg:text-7xl leading-[1.05] text-balance text-leaf-gradient`}>
               {c.hero.title1}{" "}
-              <span className="italic text-grass-600">{c.hero.title2}</span>
+              <span className="italic">{c.hero.title2}</span>
             </h1>
-            <p className="text-base md:text-lg text-grass-800 max-w-[54ch] text-pretty">
+            <p className="text-base md:text-lg text-grass-800 max-w-[54ch] text-pretty soft-shadow-text">
               {c.hero.body}
             </p>
             <div className="flex flex-wrap gap-3">
-              <button className="bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 transition-colors inline-flex items-center gap-2">
+              <button className="ripple-btn bg-grass-800 text-grass-50 text-sm font-medium py-3 px-5 rounded-full hover:bg-grass-900 inline-flex items-center gap-2">
                 {c.hero.primary}
                 <span aria-hidden>→</span>
               </button>
-              <button className="text-grass-900 text-sm font-medium py-3 px-5 rounded-full ring-1 ring-grass-800/15 hover:bg-grass-100 transition-colors">
+              <button className="ripple-btn glass text-grass-900 text-sm font-medium py-3 px-5 rounded-full">
                 {c.hero.secondary}
               </button>
             </div>
           </div>
 
           <aside className="space-y-4">
-            <div className="p-5 bg-white ring-1 ring-grass-800/10 rounded-2xl shadow-sm">
+            <div className="p-5 glass rounded-2xl lift-card float-slow">
               <span className="text-[10px] font-semibold uppercase tracking-widest text-grass-600">
                 {c.hero.side1Label}
               </span>
               <div className="mt-1 font-serif text-3xl">₹2,340<span className="text-base text-grass-600">/qtl</span></div>
               <div className="mt-1 text-sm text-grass-600 font-medium">{c.hero.side1Sub}</div>
             </div>
-            <div className="p-5 bg-grass-800 text-grass-50 rounded-2xl">
+            <div className="p-5 glass-dark text-grass-50 rounded-2xl lift-card">
               <span className="text-[10px] font-semibold uppercase tracking-widest text-grass-200/70">
                 {c.hero.side2Label}
               </span>
@@ -492,20 +506,21 @@ function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
           </aside>
         </div>
 
-        <div className="mt-12 relative overflow-hidden rounded-3xl ring-1 ring-grass-800/10">
+        <div className="mt-12 relative overflow-hidden rounded-3xl ring-1 ring-grass-800/10 lift-card">
           <img
             src={heroGrass}
             alt="Lush green grass field with morning dew"
             width={1920}
             height={1024}
-            className="w-full h-[320px] md:h-[500px] object-cover"
+            fetchPriority="high"
+            className="w-full h-[320px] md:h-[520px] object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-grass-900/50 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-grass-900/55 via-transparent to-transparent" />
           <div className="absolute bottom-5 left-5 right-5 flex flex-wrap gap-3 justify-between text-grass-50">
-            <span className="text-[10px] font-mono uppercase tracking-widest bg-grass-900/60 backdrop-blur px-3 py-1.5 rounded-full">
+            <span className="text-[10px] font-mono uppercase tracking-widest glass-dark px-3 py-1.5 rounded-full">
               {c.hero.chip1}
             </span>
-            <span className="text-[10px] font-mono uppercase tracking-widest bg-grass-900/60 backdrop-blur px-3 py-1.5 rounded-full">
+            <span className="text-[10px] font-mono uppercase tracking-widest glass-dark px-3 py-1.5 rounded-full">
               {c.hero.chip2}
             </span>
           </div>
@@ -514,6 +529,7 @@ function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
     </section>
   );
 }
+
 
 function Metrics({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
