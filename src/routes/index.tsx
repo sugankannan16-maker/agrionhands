@@ -390,22 +390,52 @@ function Logo() {
   );
 }
 
-function Nav({ lang, setLang, c }: { lang: Lang; setLang: (l: Lang) => void; c: typeof t.en }) {
+const weatherIcons: Record<Weather, string> = { sunny: "☀", cloudy: "☁", rainy: "☂", night: "☾" };
+
+function WeatherSwitch({ weather, setWeather }: { weather: Weather; setWeather: (w: Weather) => void }) {
   return (
-    <nav className="sticky top-0 z-50 bg-grass-50/85 backdrop-blur-md border-b border-grass-800/10">
+    <div className="inline-flex items-center rounded-full glass p-1 text-sm" role="group" aria-label="Scene weather">
+      {(Object.keys(weatherIcons) as Weather[]).map((w) => (
+        <button
+          key={w}
+          type="button"
+          onClick={() => setWeather(w)}
+          aria-pressed={weather === w}
+          aria-label={w}
+          title={w}
+          className={`size-7 grid place-items-center rounded-full transition-all duration-300 ${
+            weather === w ? "bg-grass-800 text-sun-500 scale-105" : "text-grass-800 hover:bg-grass-100"
+          }`}
+        >
+          <span aria-hidden>{weatherIcons[w]}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function Nav({
+  lang, setLang, c, weather, setWeather,
+}: {
+  lang: Lang; setLang: (l: Lang) => void; c: typeof t.en;
+  weather: Weather; setWeather: (w: Weather) => void;
+}) {
+  return (
+    <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
       <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-3">
         <Logo />
         <div className="hidden lg:flex gap-8 text-sm font-medium text-grass-800">
-          <a href="#features" className="hover:text-grass-900">{c.nav.features}</a>
-          <a href="#crops" className="hover:text-grass-900">{c.nav.crops}</a>
-          <a href="#predict" className="hover:text-grass-900">{c.nav.predict}</a>
-          <a href="#how" className="hover:text-grass-900">{c.nav.how}</a>
-          <a href="#impact" className="hover:text-grass-900">{c.nav.impact}</a>
-          <a href="#contact" className="hover:text-grass-900">{c.nav.contact}</a>
+          <a href="#features" className="story-link hover:text-grass-900">{c.nav.features}</a>
+          <a href="#crops" className="story-link hover:text-grass-900">{c.nav.crops}</a>
+          <a href="#predict" className="story-link hover:text-grass-900">{c.nav.predict}</a>
+          <a href="#how" className="story-link hover:text-grass-900">{c.nav.how}</a>
+          <a href="#impact" className="story-link hover:text-grass-900">{c.nav.impact}</a>
+          <a href="#contact" className="story-link hover:text-grass-900">{c.nav.contact}</a>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3">
+          <div className="hidden md:block"><WeatherSwitch weather={weather} setWeather={setWeather} /></div>
           <LangToggle lang={lang} setLang={setLang} />
-          <button className="hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 transition-colors">
+          <button className="ripple-btn hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900">
             {c.cta}
           </button>
         </div>
@@ -413,6 +443,7 @@ function Nav({ lang, setLang, c }: { lang: Lang; setLang: (l: Lang) => void; c: 
     </nav>
   );
 }
+
 
 function Hero({ c, isTa }: { c: typeof t.en; isTa: boolean }) {
   return (
