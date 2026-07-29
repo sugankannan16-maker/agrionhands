@@ -134,8 +134,30 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SiteProvider>
+        <SiteShell />
+      </SiteProvider>
     </QueryClientProvider>
   );
 }
+
+function SiteShell() {
+  const { lang, weather } = useSite();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  return (
+    <div lang={lang} className="font-sans text-grass-900 relative min-h-screen flex flex-col">
+      <Suspense fallback={null}>
+        <NatureBackground weather={weather} />
+        <LeafCursor />
+      </Suspense>
+      <Nav />
+      <main key={pathname} className="flex-1 animate-in fade-in slide-in-from-bottom-2 duration-500">
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
