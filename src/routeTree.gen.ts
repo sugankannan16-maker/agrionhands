@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PredictRouteImport } from './routes/predict'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as CropsRouteImport } from './routes/crops'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
@@ -30,6 +31,11 @@ const CropsRoute = CropsRouteImport.update({
   path: '/crops',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const ApiChatRoute = ApiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
   '/predict': typeof PredictRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
   '/predict': typeof PredictRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
   '/predict': typeof PredictRoute
@@ -65,14 +74,28 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/crops' | '/features' | '/predict' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/crops'
+    | '/features'
+    | '/predict'
+    | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/crops' | '/features' | '/predict' | '/api/chat'
-  id: '__root__' | '/' | '/crops' | '/features' | '/predict' | '/api/chat'
+  to: '/' | '/contact' | '/crops' | '/features' | '/predict' | '/api/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/crops'
+    | '/features'
+    | '/predict'
+    | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
   CropsRoute: typeof CropsRoute
   FeaturesRoute: typeof FeaturesRoute
   PredictRoute: typeof PredictRoute
@@ -102,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CropsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -121,6 +151,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
   CropsRoute: CropsRoute,
   FeaturesRoute: FeaturesRoute,
   PredictRoute: PredictRoute,
