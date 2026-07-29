@@ -4,13 +4,20 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteProvider, useSite } from "../site/SiteProvider";
+import { Nav, Footer } from "../components/site/Chrome";
+
+const NatureBackground = lazy(() => import("../components/nature/NatureBackground"));
+const LeafCursor = lazy(() => import("../components/nature/LeafCursor"));
+
 
 function NotFoundComponent() {
   return (
@@ -134,8 +141,30 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SiteProvider>
+        <SiteShell />
+      </SiteProvider>
     </QueryClientProvider>
   );
 }
+
+function SiteShell() {
+  const { lang, weather } = useSite();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  return (
+    <div lang={lang} className="font-sans text-grass-900 relative min-h-screen flex flex-col">
+      <Suspense fallback={null}>
+        <NatureBackground weather={weather} />
+        <LeafCursor />
+      </Suspense>
+      <Nav />
+      <main key={pathname} className="flex-1 animate-in fade-in slide-in-from-bottom-2 duration-500">
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
