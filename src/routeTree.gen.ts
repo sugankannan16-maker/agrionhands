@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PredictRouteImport } from './routes/predict'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as CropsRouteImport } from './routes/crops'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const PredictRoute = PredictRouteImport.update({
+  id: '/predict',
+  path: '/predict',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
+  '/predict': typeof PredictRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
+  '/predict': typeof PredictRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
@@ -52,25 +60,34 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
+  '/predict': typeof PredictRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/crops' | '/features' | '/api/chat'
+  fullPaths: '/' | '/crops' | '/features' | '/predict' | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/crops' | '/features' | '/api/chat'
-  id: '__root__' | '/' | '/crops' | '/features' | '/api/chat'
+  to: '/' | '/crops' | '/features' | '/predict' | '/api/chat'
+  id: '__root__' | '/' | '/crops' | '/features' | '/predict' | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CropsRoute: typeof CropsRoute
   FeaturesRoute: typeof FeaturesRoute
+  PredictRoute: typeof PredictRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/predict': {
+      id: '/predict'
+      path: '/predict'
+      fullPath: '/predict'
+      preLoaderRoute: typeof PredictRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features': {
       id: '/features'
       path: '/features'
@@ -106,6 +123,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CropsRoute: CropsRoute,
   FeaturesRoute: FeaturesRoute,
+  PredictRoute: PredictRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
