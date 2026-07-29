@@ -4,13 +4,20 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { lazy, Suspense, useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteProvider, useSite } from "../site/SiteProvider";
+import { Nav, Footer } from "../components/site/Chrome";
+
+const NatureBackground = lazy(() => import("../components/nature/NatureBackground"));
+const LeafCursor = lazy(() => import("../components/nature/LeafCursor"));
+
 
 function NotFoundComponent() {
   return (
