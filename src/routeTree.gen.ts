@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WeatherRouteImport } from './routes/weather'
 import { Route as PredictRouteImport } from './routes/predict'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as CropsRouteImport } from './routes/crops'
@@ -23,6 +24,7 @@ import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-pas
 import { Route as AuthBuyerRegisterRouteImport } from './routes/auth.buyer-register'
 import { Route as AuthBuyerLoginRouteImport } from './routes/auth.buyer-login'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AuthenticatedSellerSettingsRouteImport } from './routes/_authenticated/seller.settings'
 import { Route as AuthenticatedSellerProductsRouteImport } from './routes/_authenticated/seller.products'
 import { Route as AuthenticatedSellerOrdersRouteImport } from './routes/_authenticated/seller.orders'
 import { Route as AuthenticatedSellerInventoryRouteImport } from './routes/_authenticated/seller.inventory'
@@ -30,12 +32,18 @@ import { Route as AuthenticatedSellerDashboardRouteImport } from './routes/_auth
 import { Route as AuthenticatedSellerAnalyticsRouteImport } from './routes/_authenticated/seller.analytics'
 import { Route as AuthenticatedSellerAddProductRouteImport } from './routes/_authenticated/seller.add-product'
 import { Route as AuthenticatedBuyerWishlistRouteImport } from './routes/_authenticated/buyer.wishlist'
+import { Route as AuthenticatedBuyerSettingsRouteImport } from './routes/_authenticated/buyer.settings'
 import { Route as AuthenticatedBuyerOrdersRouteImport } from './routes/_authenticated/buyer.orders'
 import { Route as AuthenticatedBuyerDashboardRouteImport } from './routes/_authenticated/buyer.dashboard'
 import { Route as AuthenticatedBuyerCartRouteImport } from './routes/_authenticated/buyer.cart'
 import { Route as AuthenticatedBuyerBrowseRouteImport } from './routes/_authenticated/buyer.browse'
 import { Route as AuthenticatedBuyerProductIdRouteImport } from './routes/_authenticated/buyer.product.$id'
 
+const WeatherRoute = WeatherRouteImport.update({
+  id: '/weather',
+  path: '/weather',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PredictRoute = PredictRouteImport.update({
   id: '/predict',
   path: '/predict',
@@ -105,6 +113,12 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedSellerSettingsRoute =
+  AuthenticatedSellerSettingsRouteImport.update({
+    id: '/seller/settings',
+    path: '/seller/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSellerProductsRoute =
   AuthenticatedSellerProductsRouteImport.update({
     id: '/seller/products',
@@ -147,6 +161,12 @@ const AuthenticatedBuyerWishlistRoute =
     path: '/buyer/wishlist',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedBuyerSettingsRoute =
+  AuthenticatedBuyerSettingsRouteImport.update({
+    id: '/buyer/settings',
+    path: '/buyer/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedBuyerOrdersRoute =
   AuthenticatedBuyerOrdersRouteImport.update({
     id: '/buyer/orders',
@@ -184,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
   '/predict': typeof PredictRoute
+  '/weather': typeof WeatherRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -195,6 +216,7 @@ export interface FileRoutesByFullPath {
   '/buyer/cart': typeof AuthenticatedBuyerCartRoute
   '/buyer/dashboard': typeof AuthenticatedBuyerDashboardRoute
   '/buyer/orders': typeof AuthenticatedBuyerOrdersRoute
+  '/buyer/settings': typeof AuthenticatedBuyerSettingsRoute
   '/buyer/wishlist': typeof AuthenticatedBuyerWishlistRoute
   '/seller/add-product': typeof AuthenticatedSellerAddProductRoute
   '/seller/analytics': typeof AuthenticatedSellerAnalyticsRoute
@@ -202,6 +224,7 @@ export interface FileRoutesByFullPath {
   '/seller/inventory': typeof AuthenticatedSellerInventoryRoute
   '/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/seller/products': typeof AuthenticatedSellerProductsRoute
+  '/seller/settings': typeof AuthenticatedSellerSettingsRoute
   '/buyer/product/$id': typeof AuthenticatedBuyerProductIdRoute
 }
 export interface FileRoutesByTo {
@@ -211,6 +234,7 @@ export interface FileRoutesByTo {
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
   '/predict': typeof PredictRoute
+  '/weather': typeof WeatherRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -222,6 +246,7 @@ export interface FileRoutesByTo {
   '/buyer/cart': typeof AuthenticatedBuyerCartRoute
   '/buyer/dashboard': typeof AuthenticatedBuyerDashboardRoute
   '/buyer/orders': typeof AuthenticatedBuyerOrdersRoute
+  '/buyer/settings': typeof AuthenticatedBuyerSettingsRoute
   '/buyer/wishlist': typeof AuthenticatedBuyerWishlistRoute
   '/seller/add-product': typeof AuthenticatedSellerAddProductRoute
   '/seller/analytics': typeof AuthenticatedSellerAnalyticsRoute
@@ -229,6 +254,7 @@ export interface FileRoutesByTo {
   '/seller/inventory': typeof AuthenticatedSellerInventoryRoute
   '/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/seller/products': typeof AuthenticatedSellerProductsRoute
+  '/seller/settings': typeof AuthenticatedSellerSettingsRoute
   '/buyer/product/$id': typeof AuthenticatedBuyerProductIdRoute
 }
 export interface FileRoutesById {
@@ -240,6 +266,7 @@ export interface FileRoutesById {
   '/crops': typeof CropsRoute
   '/features': typeof FeaturesRoute
   '/predict': typeof PredictRoute
+  '/weather': typeof WeatherRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -251,6 +278,7 @@ export interface FileRoutesById {
   '/_authenticated/buyer/cart': typeof AuthenticatedBuyerCartRoute
   '/_authenticated/buyer/dashboard': typeof AuthenticatedBuyerDashboardRoute
   '/_authenticated/buyer/orders': typeof AuthenticatedBuyerOrdersRoute
+  '/_authenticated/buyer/settings': typeof AuthenticatedBuyerSettingsRoute
   '/_authenticated/buyer/wishlist': typeof AuthenticatedBuyerWishlistRoute
   '/_authenticated/seller/add-product': typeof AuthenticatedSellerAddProductRoute
   '/_authenticated/seller/analytics': typeof AuthenticatedSellerAnalyticsRoute
@@ -258,6 +286,7 @@ export interface FileRoutesById {
   '/_authenticated/seller/inventory': typeof AuthenticatedSellerInventoryRoute
   '/_authenticated/seller/orders': typeof AuthenticatedSellerOrdersRoute
   '/_authenticated/seller/products': typeof AuthenticatedSellerProductsRoute
+  '/_authenticated/seller/settings': typeof AuthenticatedSellerSettingsRoute
   '/_authenticated/buyer/product/$id': typeof AuthenticatedBuyerProductIdRoute
 }
 export interface FileRouteTypes {
@@ -269,6 +298,7 @@ export interface FileRouteTypes {
     | '/crops'
     | '/features'
     | '/predict'
+    | '/weather'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -280,6 +310,7 @@ export interface FileRouteTypes {
     | '/buyer/cart'
     | '/buyer/dashboard'
     | '/buyer/orders'
+    | '/buyer/settings'
     | '/buyer/wishlist'
     | '/seller/add-product'
     | '/seller/analytics'
@@ -287,6 +318,7 @@ export interface FileRouteTypes {
     | '/seller/inventory'
     | '/seller/orders'
     | '/seller/products'
+    | '/seller/settings'
     | '/buyer/product/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -296,6 +328,7 @@ export interface FileRouteTypes {
     | '/crops'
     | '/features'
     | '/predict'
+    | '/weather'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -307,6 +340,7 @@ export interface FileRouteTypes {
     | '/buyer/cart'
     | '/buyer/dashboard'
     | '/buyer/orders'
+    | '/buyer/settings'
     | '/buyer/wishlist'
     | '/seller/add-product'
     | '/seller/analytics'
@@ -314,6 +348,7 @@ export interface FileRouteTypes {
     | '/seller/inventory'
     | '/seller/orders'
     | '/seller/products'
+    | '/seller/settings'
     | '/buyer/product/$id'
   id:
     | '__root__'
@@ -324,6 +359,7 @@ export interface FileRouteTypes {
     | '/crops'
     | '/features'
     | '/predict'
+    | '/weather'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -335,6 +371,7 @@ export interface FileRouteTypes {
     | '/_authenticated/buyer/cart'
     | '/_authenticated/buyer/dashboard'
     | '/_authenticated/buyer/orders'
+    | '/_authenticated/buyer/settings'
     | '/_authenticated/buyer/wishlist'
     | '/_authenticated/seller/add-product'
     | '/_authenticated/seller/analytics'
@@ -342,6 +379,7 @@ export interface FileRouteTypes {
     | '/_authenticated/seller/inventory'
     | '/_authenticated/seller/orders'
     | '/_authenticated/seller/products'
+    | '/_authenticated/seller/settings'
     | '/_authenticated/buyer/product/$id'
   fileRoutesById: FileRoutesById
 }
@@ -353,6 +391,7 @@ export interface RootRouteChildren {
   CropsRoute: typeof CropsRoute
   FeaturesRoute: typeof FeaturesRoute
   PredictRoute: typeof PredictRoute
+  WeatherRoute: typeof WeatherRoute
   ApiChatRoute: typeof ApiChatRoute
   AuthBuyerLoginRoute: typeof AuthBuyerLoginRoute
   AuthBuyerRegisterRoute: typeof AuthBuyerRegisterRoute
@@ -364,6 +403,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/weather': {
+      id: '/weather'
+      path: '/weather'
+      fullPath: '/weather'
+      preLoaderRoute: typeof WeatherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/predict': {
       id: '/predict'
       path: '/predict'
@@ -462,6 +508,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/seller/settings': {
+      id: '/_authenticated/seller/settings'
+      path: '/seller/settings'
+      fullPath: '/seller/settings'
+      preLoaderRoute: typeof AuthenticatedSellerSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/seller/products': {
       id: '/_authenticated/seller/products'
       path: '/seller/products'
@@ -511,6 +564,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBuyerWishlistRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/buyer/settings': {
+      id: '/_authenticated/buyer/settings'
+      path: '/buyer/settings'
+      fullPath: '/buyer/settings'
+      preLoaderRoute: typeof AuthenticatedBuyerSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/buyer/orders': {
       id: '/_authenticated/buyer/orders'
       path: '/buyer/orders'
@@ -554,6 +614,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBuyerCartRoute: typeof AuthenticatedBuyerCartRoute
   AuthenticatedBuyerDashboardRoute: typeof AuthenticatedBuyerDashboardRoute
   AuthenticatedBuyerOrdersRoute: typeof AuthenticatedBuyerOrdersRoute
+  AuthenticatedBuyerSettingsRoute: typeof AuthenticatedBuyerSettingsRoute
   AuthenticatedBuyerWishlistRoute: typeof AuthenticatedBuyerWishlistRoute
   AuthenticatedSellerAddProductRoute: typeof AuthenticatedSellerAddProductRoute
   AuthenticatedSellerAnalyticsRoute: typeof AuthenticatedSellerAnalyticsRoute
@@ -561,6 +622,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSellerInventoryRoute: typeof AuthenticatedSellerInventoryRoute
   AuthenticatedSellerOrdersRoute: typeof AuthenticatedSellerOrdersRoute
   AuthenticatedSellerProductsRoute: typeof AuthenticatedSellerProductsRoute
+  AuthenticatedSellerSettingsRoute: typeof AuthenticatedSellerSettingsRoute
   AuthenticatedBuyerProductIdRoute: typeof AuthenticatedBuyerProductIdRoute
 }
 
@@ -569,6 +631,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBuyerCartRoute: AuthenticatedBuyerCartRoute,
   AuthenticatedBuyerDashboardRoute: AuthenticatedBuyerDashboardRoute,
   AuthenticatedBuyerOrdersRoute: AuthenticatedBuyerOrdersRoute,
+  AuthenticatedBuyerSettingsRoute: AuthenticatedBuyerSettingsRoute,
   AuthenticatedBuyerWishlistRoute: AuthenticatedBuyerWishlistRoute,
   AuthenticatedSellerAddProductRoute: AuthenticatedSellerAddProductRoute,
   AuthenticatedSellerAnalyticsRoute: AuthenticatedSellerAnalyticsRoute,
@@ -576,6 +639,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSellerInventoryRoute: AuthenticatedSellerInventoryRoute,
   AuthenticatedSellerOrdersRoute: AuthenticatedSellerOrdersRoute,
   AuthenticatedSellerProductsRoute: AuthenticatedSellerProductsRoute,
+  AuthenticatedSellerSettingsRoute: AuthenticatedSellerSettingsRoute,
   AuthenticatedBuyerProductIdRoute: AuthenticatedBuyerProductIdRoute,
 }
 
@@ -590,6 +654,7 @@ const rootRouteChildren: RootRouteChildren = {
   CropsRoute: CropsRoute,
   FeaturesRoute: FeaturesRoute,
   PredictRoute: PredictRoute,
+  WeatherRoute: WeatherRoute,
   ApiChatRoute: ApiChatRoute,
   AuthBuyerLoginRoute: AuthBuyerLoginRoute,
   AuthBuyerRegisterRoute: AuthBuyerRegisterRoute,
@@ -601,13 +666,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
