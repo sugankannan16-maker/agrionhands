@@ -78,9 +78,12 @@ export function Nav() {
     { to: "/features", label: c.nav.features },
     { to: "/crops", label: c.nav.crops },
     { to: "/predict", label: c.nav.predict },
+    { to: "/weather", label: "Weather" },
+    { to: "/buyer/browse", label: "Market" },
     { to: "/assistant", label: c.nav.assistant },
     { to: "/contact", label: c.nav.contact },
   ] as const;
+
 
   return (
     <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
