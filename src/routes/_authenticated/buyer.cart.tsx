@@ -6,6 +6,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { RoleGate, useAuthUser, useProfile } from "@/lib/auth";
 import { ModuleLayout } from "@/components/shop/ModuleLayout";
 import { EmptyState, Panel, ProductImage, inr, useCart } from "@/components/shop/shop";
+import { logActivity } from "@/lib/activity";
+
 
 export const Route = createFileRoute("/_authenticated/buyer/cart")({
   component: () => (
