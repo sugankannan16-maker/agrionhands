@@ -6,6 +6,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { RoleGate, useAuthUser } from "@/lib/auth";
 import { ModuleLayout } from "@/components/shop/ModuleLayout";
 import { CATEGORIES, Panel } from "@/components/shop/shop";
+import { logActivity } from "@/lib/activity";
+
 
 export const Route = createFileRoute("/_authenticated/seller/add-product")({
   component: () => (
