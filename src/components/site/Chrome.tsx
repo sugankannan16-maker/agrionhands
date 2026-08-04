@@ -81,8 +81,10 @@ export function Nav() {
     { to: "/weather", label: "Weather" },
     { to: "/buyer/browse", label: "Market" },
     { to: "/assistant", label: c.nav.assistant },
+    { to: "/history", label: "History" },
     { to: "/contact", label: c.nav.contact },
   ] as const;
+
 
 
   return (
