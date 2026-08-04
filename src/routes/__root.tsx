@@ -17,6 +17,8 @@ import { Nav, Footer } from "../components/site/Chrome";
 
 const NatureBackground = lazy(() => import("../components/nature/NatureBackground"));
 const LeafCursor = lazy(() => import("../components/nature/LeafCursor"));
+const FloatingDock = lazy(() => import("../components/floating/FloatingDock"));
+
 
 
 function NotFoundComponent() {
