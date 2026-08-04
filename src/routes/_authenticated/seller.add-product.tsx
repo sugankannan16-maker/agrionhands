@@ -66,9 +66,16 @@ function Page() {
     setSaving(false);
 
     if (error) return toast.error(error.message);
+    void logActivity({
+      category: "marketplace",
+      title: `Listed product — ${form.title.trim()}`,
+      detail: `${form.category} · ₹${price}/${form.unit} · stock ${stock}`,
+      link: "/seller/products",
+    });
     toast.success("Product listed!");
     qc.invalidateQueries();
     navigate({ to: "/seller/products" });
+
   }
 
   return (
