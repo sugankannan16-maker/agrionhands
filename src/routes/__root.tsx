@@ -166,7 +166,11 @@ function SiteShell() {
         <Outlet />
       </main>
       <Footer />
+      <Suspense fallback={null}>
+        <FloatingDock />
+      </Suspense>
     </div>
   );
 }
+
 
