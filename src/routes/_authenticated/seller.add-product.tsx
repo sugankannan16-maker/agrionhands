@@ -6,6 +6,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { RoleGate, useAuthUser } from "@/lib/auth";
 import { ModuleLayout } from "@/components/shop/ModuleLayout";
 import { CATEGORIES, Panel } from "@/components/shop/shop";
+import { logActivity } from "@/lib/activity";
+
 
 export const Route = createFileRoute("/_authenticated/seller/add-product")({
   component: () => (
@@ -66,9 +68,16 @@ function Page() {
     setSaving(false);
 
     if (error) return toast.error(error.message);
+    void logActivity({
+      category: "marketplace",
+      title: `Listed product — ${form.title.trim()}`,
+      detail: `${form.category} · ₹${price}/${form.unit} · stock ${stock}`,
+      link: "/seller/products",
+    });
     toast.success("Product listed!");
     qc.invalidateQueries();
     navigate({ to: "/seller/products" });
+
   }
 
   return (

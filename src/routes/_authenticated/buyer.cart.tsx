@@ -6,6 +6,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { RoleGate, useAuthUser, useProfile } from "@/lib/auth";
 import { ModuleLayout } from "@/components/shop/ModuleLayout";
 import { EmptyState, Panel, ProductImage, inr, useCart } from "@/components/shop/shop";
+import { logActivity } from "@/lib/activity";
+
 
 export const Route = createFileRoute("/_authenticated/buyer/cart")({
   component: () => (
@@ -84,10 +86,18 @@ function Page() {
     }
 
     await supabase.from("cart_items").delete().eq("user_id", user.id);
+    void logActivity({
+      category: "order",
+      title: `Order placed — ${rows.length} item${rows.length === 1 ? "" : "s"}`,
+      detail: `${rows.map((r) => `${r.title} ×${r.quantity}`).join(", ")} · Total ${inr(total)}`,
+      meta: { order_id: order.id, total },
+      link: "/buyer/orders",
+    });
     qc.invalidateQueries();
     setPlacing(false);
     toast.success("Order placed! The growers have been notified.");
     navigate({ to: "/buyer/orders" });
+
   }
 
   return (

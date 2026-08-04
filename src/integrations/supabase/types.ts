@@ -14,6 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
+      activity_log: {
+        Row: {
+          category: string
+          created_at: string
+          detail: string
+          id: string
+          link: string | null
+          meta: Json
+          title: string
+          user_id: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          detail?: string
+          id?: string
+          link?: string | null
+          meta?: Json
+          title?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          detail?: string
+          id?: string
+          link?: string | null
+          meta?: Json
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      captures: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string
+          latitude: number | null
+          longitude: number | null
+          note: string | null
+          prediction: string | null
+          storage_path: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url: string
+          latitude?: number | null
+          longitude?: number | null
+          note?: string | null
+          prediction?: string | null
+          storage_path: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string
+          latitude?: number | null
+          longitude?: number | null
+          note?: string | null
+          prediction?: string | null
+          storage_path?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       cart_items: {
         Row: {
           created_at: string

@@ -4,6 +4,8 @@ import Reveal from "@/components/nature/Reveal";
 import { useSite } from "@/site/SiteProvider";
 import { PageHeader } from "@/components/site/Chrome";
 import { cropData, cropBaselines } from "@/data/crops";
+import { logActivity } from "@/lib/activity";
+
 
 export const Route = createFileRoute("/predict")({
   head: () => ({
@@ -74,7 +76,15 @@ function PredictPage() {
     const advisory = ph < 6 ? a.acid : rain < 500 ? a.dry : a.ok;
 
     setResult({ perAcre, total, confidence, advisory });
+    void logActivity({
+      category: "prediction",
+      title: `Yield prediction — ${form.crop} at ${form.location}`,
+      detail: `${perAcre} per acre · ${total} total · ${confidence}% confidence. ${advisory}`,
+      meta: { ...form },
+      link: "/predict",
+    });
   };
+
 
   const inputCls =
     "w-full bg-white/80 ring-1 ring-grass-800/15 rounded-xl px-3.5 py-2.5 text-sm text-grass-900 placeholder:text-grass-600/60 focus:outline-none focus:ring-2 focus:ring-grass-600";

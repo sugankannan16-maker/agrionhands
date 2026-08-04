@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/site/Chrome";
 import { Panel } from "@/components/shop/shop";
+import { logActivity } from "@/lib/activity";
+
 
 export const Route = createFileRoute("/weather")({
   head: () => ({
@@ -108,7 +110,15 @@ function WeatherPage() {
         setCurrent(d.current as Current);
         setDaily(d.daily as Daily);
         setLoading(false);
+        void logActivity({
+          category: "weather",
+          title: `Weather checked — ${place.name}`,
+          detail: `${Math.round(d.current?.temperature_2m ?? 0)}°C · humidity ${d.current?.relative_humidity_2m ?? "–"}% · wind ${d.current?.wind_speed_10m ?? "–"} km/h`,
+          meta: { lat: place.lat, lon: place.lon },
+          link: "/weather",
+        });
       })
+
       .catch(() => {
         if (!alive) return;
         setError("Could not load weather right now. Please try again.");
