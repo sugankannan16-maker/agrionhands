@@ -4,6 +4,8 @@ import Reveal from "@/components/nature/Reveal";
 import { useSite } from "@/site/SiteProvider";
 import { PageHeader } from "@/components/site/Chrome";
 import { cropData, cropBaselines } from "@/data/crops";
+import { logActivity } from "@/lib/activity";
+
 
 export const Route = createFileRoute("/predict")({
   head: () => ({
