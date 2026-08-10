@@ -5,21 +5,23 @@ import { langMeta, type Lang } from "@/site/content";
 import type { Weather } from "@/components/nature/NatureBackground";
 import { LeafIcon } from "./Icons";
 
-export function Logo() {
+export function Logo({ size = "md" }: { size?: "sm" | "md" }) {
   return (
-    <Link to="/" className="flex min-w-0 items-center gap-2 shrink-0">
-      <div className="size-8 rounded-full bg-grass-800 grid place-items-center shrink-0">
-        <LeafIcon className="size-4 text-sun-500" />
-      </div>
+    <Link to="/" className="flex min-w-0 shrink-0 items-center gap-2">
       <span
-        className="text-lg md:text-xl leading-none text-grass-900 tracking-tight whitespace-nowrap"
-        style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
+        className={`grid shrink-0 place-items-center rounded-full bg-grass-800 ${size === "sm" ? "size-7" : "size-8"}`}
       >
-        Agri on Hands
+        <LeafIcon className={size === "sm" ? "size-3.5 text-sun-500" : "size-4 text-sun-500"} />
+      </span>
+      <span
+        className={`wordmark text-grass-900 ${size === "sm" ? "text-[1.05rem]" : "text-[1.15rem] xl:text-[1.3rem]"}`}
+      >
+        Agri&nbsp;on&nbsp;Hands
       </span>
     </Link>
   );
 }
+
 
 function LangToggle() {
   const { lang, setLang } = useSite();
