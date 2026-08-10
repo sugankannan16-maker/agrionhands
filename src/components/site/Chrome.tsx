@@ -151,7 +151,7 @@ export function Footer() {
     { to: "/contact", label: c.nav.contact },
   ] as const;
   return (
-    <footer className="py-10 px-4 md:px-6 border-t border-grass-800/10">
+    <footer className="py-10 border-t border-grass-800/10">
       <div className="container-page flex flex-col md:flex-row justify-between items-center gap-5">
         <Logo />
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-grass-800">

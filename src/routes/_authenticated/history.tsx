@@ -109,7 +109,7 @@ function HistoryPage() {
   const loading = activity.isLoading || captures.isLoading;
 
   return (
-    <section className="py-10 md:py-16 px-4 md:px-6">
+    <section className="py-10 md:py-16">
       <div className="max-w-5xl mx-auto">
         <PageHeader
           kicker="Your timeline"

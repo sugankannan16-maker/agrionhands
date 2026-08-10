@@ -89,7 +89,7 @@ function AssistantPage() {
   const state = listening ? c.assistant.listening : status === "processing" ? c.assistant.processing : speaking ? c.assistant.speaking : c.assistant.idle;
 
   return (
-    <section className="py-10 md:py-16 px-4 md:px-6">
+    <section className="py-10 md:py-16">
       <div className="max-w-4xl mx-auto">
         <PageHeader kicker={c.assistant.kicker} heading={c.assistant.heading} sub={c.assistant.sub} />
 
