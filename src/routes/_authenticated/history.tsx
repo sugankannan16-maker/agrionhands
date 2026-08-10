@@ -195,7 +195,7 @@ function HistoryPage() {
             );
           })}
         </div>
-      </div>
+      </div></div>
 
       {zoom && (
         <div className="fixed inset-0 z-[90] grid place-items-center bg-grass-900/70 backdrop-blur-sm p-4" onClick={() => setZoom(null)}>
