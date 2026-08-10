@@ -164,7 +164,7 @@ function WeatherPage() {
   const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${place.lon - 0.35}%2C${place.lat - 0.25}%2C${place.lon + 0.35}%2C${place.lat + 0.25}&layer=mapnik&marker=${place.lat}%2C${place.lon}`;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-16">
+    <div className="container-page py-10 md:py-16">
       <PageHeader
         kicker="Weather intelligence"
         heading="Weather prediction & farm advisory"

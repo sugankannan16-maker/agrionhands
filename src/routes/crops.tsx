@@ -22,8 +22,8 @@ function CropsPage() {
   const [active, setActive] = useState<string | null>(null);
 
   return (
-    <section className="py-14 md:py-20 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-14 md:py-20">
+      <div className="container-page">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <PageHeader kicker={c.crops.kicker} heading={c.crops.heading} sub={c.crops.sub} />
           <span className="mb-10 text-xs font-semibold uppercase tracking-widest text-grass-600 glass px-3 py-1.5 rounded-full self-start">

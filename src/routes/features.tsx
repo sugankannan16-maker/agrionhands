@@ -27,8 +27,8 @@ function FeaturesPage() {
   ];
 
   return (
-    <section className="py-14 md:py-20 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-14 md:py-20">
+      <div className="container-page">
         <PageHeader kicker={c.features.kicker} heading={c.features.heading} sub={c.features.sub} />
         <Reveal>
           <div className="grid md:grid-cols-6 gap-4">

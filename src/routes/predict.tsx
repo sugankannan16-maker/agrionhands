@@ -91,8 +91,8 @@ function PredictPage() {
   const labelCls = "text-[11px] font-semibold uppercase tracking-widest text-grass-600 mb-1.5 block";
 
   return (
-    <section className="py-14 md:py-20 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-14 md:py-20">
+      <div className="container-page">
         <PageHeader kicker={c.predict.kicker} heading={c.predict.heading} sub={c.predict.sub} />
 
         <Reveal>

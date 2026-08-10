@@ -46,7 +46,7 @@ function Hero() {
         ))}
       </div>
 
-      <div className="max-w-7xl mx-auto relative">
+      <div className="container-page relative">
         <div className="grid lg:grid-cols-[1fr_340px] gap-10 items-end">
           <div className="space-y-6 reveal is-visible">
             <span className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-800">
@@ -105,7 +105,7 @@ function Metrics() {
   const { c, isLatin } = useSite();
   return (
     <section className="py-20 px-4 md:px-6 bg-grass-800/90 text-grass-50 backdrop-blur-sm">
-      <div className="max-w-7xl mx-auto">
+      <div className="container-page">
         <h2 className={`${isLatin ? "font-serif" : ""} text-3xl md:text-4xl mb-12 max-w-[24ch] text-balance`}>{c.metrics.heading}</h2>
         <div className="grid md:grid-cols-3 gap-10 md:gap-0 md:divide-x divide-grass-50/10">
           {c.metrics.items.map((m, i) => (
@@ -124,8 +124,8 @@ function Metrics() {
 function HowItWorks() {
   const { c, isLatin } = useSite();
   return (
-    <section className="py-20 md:py-28 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-20 md:py-28">
+      <div className="container-page">
         <div className="mb-12 max-w-[52ch]">
           <span className="text-[11px] font-semibold uppercase tracking-[0.2em] text-grass-600">{c.how.kicker}</span>
           <h2 className={`${isLatin ? "font-serif" : ""} text-3xl md:text-5xl mt-3 text-balance`}>{c.how.heading}</h2>
@@ -165,8 +165,8 @@ function Testimonial() {
 function CTA() {
   const { c, isLatin } = useSite();
   return (
-    <section className="py-16 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-16">
+      <div className="container-page">
         <div className="bg-grass-800 rounded-3xl p-10 md:p-16 text-center relative overflow-hidden">
           <img src={heroGrass} alt="" aria-hidden width={1920} height={1024} loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-15" />
           <div className="relative space-y-5">

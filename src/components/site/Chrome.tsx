@@ -89,7 +89,7 @@ export function Nav() {
 
   return (
     <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 grid grid-cols-[minmax(0,auto)_1fr_auto] items-center gap-4 lg:gap-8">
+      <div className="container-page h-16 grid grid-cols-[minmax(0,auto)_1fr_auto] items-center gap-4 lg:gap-8">
         <Logo />
         <div className="hidden lg:flex justify-center gap-x-6 text-sm font-medium text-grass-800">
           {links.map((l) => (
@@ -152,7 +152,7 @@ export function Footer() {
   ] as const;
   return (
     <footer className="py-10 px-4 md:px-6 border-t border-grass-800/10">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-5">
+      <div className="container-page flex flex-col md:flex-row justify-between items-center gap-5">
         <Logo />
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-grass-800">
           {links.map((l) => (
