@@ -110,7 +110,7 @@ function HistoryPage() {
 
   return (
     <section className="py-10 md:py-16">
-      <div className="max-w-5xl mx-auto">
+      <div className="container-page"><div className="mx-auto w-full max-w-5xl">
         <PageHeader
           kicker="Your timeline"
           heading="Activity history"

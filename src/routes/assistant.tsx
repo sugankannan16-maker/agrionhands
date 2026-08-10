@@ -90,7 +90,7 @@ function AssistantPage() {
 
   return (
     <section className="py-10 md:py-16">
-      <div className="max-w-4xl mx-auto">
+      <div className="container-page"><div className="mx-auto w-full max-w-4xl">
         <PageHeader kicker={c.assistant.kicker} heading={c.assistant.heading} sub={c.assistant.sub} />
 
         <div className="glass rounded-3xl overflow-hidden flex flex-col h-[68vh] min-h-[460px]">
