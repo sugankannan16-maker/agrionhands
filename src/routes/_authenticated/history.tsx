@@ -109,8 +109,8 @@ function HistoryPage() {
   const loading = activity.isLoading || captures.isLoading;
 
   return (
-    <section className="py-10 md:py-16 px-4 md:px-6">
-      <div className="max-w-5xl mx-auto">
+    <section className="py-10 md:py-16">
+      <div className="container-page"><div className="mx-auto w-full max-w-5xl">
         <PageHeader
           kicker="Your timeline"
           heading="Activity history"
@@ -195,7 +195,7 @@ function HistoryPage() {
             );
           })}
         </div>
-      </div>
+      </div></div>
 
       {zoom && (
         <div className="fixed inset-0 z-[90] grid place-items-center bg-grass-900/70 backdrop-blur-sm p-4" onClick={() => setZoom(null)}>

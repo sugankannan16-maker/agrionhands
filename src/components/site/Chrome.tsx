@@ -5,21 +5,23 @@ import { langMeta, type Lang } from "@/site/content";
 import type { Weather } from "@/components/nature/NatureBackground";
 import { LeafIcon } from "./Icons";
 
-export function Logo() {
+export function Logo({ size = "md" }: { size?: "sm" | "md" }) {
   return (
-    <Link to="/" className="flex min-w-0 items-center gap-2 shrink-0">
-      <div className="size-8 rounded-full bg-grass-800 grid place-items-center shrink-0">
-        <LeafIcon className="size-4 text-sun-500" />
-      </div>
+    <Link to="/" className="flex min-w-0 shrink-0 items-center gap-2">
       <span
-        className="text-lg md:text-xl leading-none text-grass-900 tracking-tight whitespace-nowrap"
-        style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
+        className={`grid shrink-0 place-items-center rounded-full bg-grass-800 ${size === "sm" ? "size-7" : "size-8"}`}
       >
-        Agri on Hands
+        <LeafIcon className={size === "sm" ? "size-3.5 text-sun-500" : "size-4 text-sun-500"} />
+      </span>
+      <span
+        className={`wordmark text-grass-900 ${size === "sm" ? "text-[1.05rem]" : "text-[1.15rem] xl:text-[1.3rem]"}`}
+      >
+        Agri&nbsp;on&nbsp;Hands
       </span>
     </Link>
   );
 }
+
 
 function LangToggle() {
   const { lang, setLang } = useSite();
@@ -89,28 +91,31 @@ export function Nav() {
 
   return (
     <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 grid grid-cols-[minmax(0,auto)_1fr_auto] items-center gap-4 lg:gap-8">
+      <div className="container-page h-16 flex items-center justify-between gap-4 lg:gap-8">
         <Logo />
-        <div className="hidden lg:flex justify-center gap-x-6 text-sm font-medium text-grass-800">
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className="story-link whitespace-nowrap hover:text-grass-900 aria-[current=page]:text-grass-900 aria-[current=page]:font-semibold"
-            >
-              {l.label}
-            </Link>
-          ))}
+        <div className="hidden lg:flex flex-1 min-w-0 items-center justify-center gap-x-4 xl:gap-x-6 text-[0.8125rem] xl:text-sm font-medium text-grass-800">
+          {links
+            .filter((l) => l.to !== "/")
+            .map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className="story-link whitespace-nowrap hover:text-grass-900 aria-[current=page]:text-grass-900 aria-[current=page]:font-semibold"
+              >
+                {l.label}
+              </Link>
+            ))}
         </div>
-        <div className="flex items-center justify-end gap-2 md:gap-3">
-          <div className="hidden md:block"><WeatherSwitch /></div>
+        <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
+          <div className="hidden 2xl:block"><WeatherSwitch /></div>
           <LangToggle />
           <Link
             to="/assistant"
-            className="ripple-btn hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 whitespace-nowrap"
+            className="ripple-btn hidden 2xl:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 whitespace-nowrap"
           >
             {c.nav.assistant}
           </Link>
+
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -134,7 +139,7 @@ export function Nav() {
               {l.label}
             </Link>
           ))}
-          <div className="pt-3 md:hidden"><WeatherSwitch /></div>
+          <div className="pt-3"><WeatherSwitch /></div>
         </div>
       )}
     </nav>
@@ -151,8 +156,8 @@ export function Footer() {
     { to: "/contact", label: c.nav.contact },
   ] as const;
   return (
-    <footer className="py-10 px-4 md:px-6 border-t border-grass-800/10">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-5">
+    <footer className="py-10 border-t border-grass-800/10">
+      <div className="container-page flex flex-col md:flex-row justify-between items-center gap-5">
         <Logo />
         <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-grass-800">
           {links.map((l) => (

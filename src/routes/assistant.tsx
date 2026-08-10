@@ -89,8 +89,8 @@ function AssistantPage() {
   const state = listening ? c.assistant.listening : status === "processing" ? c.assistant.processing : speaking ? c.assistant.speaking : c.assistant.idle;
 
   return (
-    <section className="py-10 md:py-16 px-4 md:px-6">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-10 md:py-16">
+      <div className="container-page"><div className="mx-auto w-full max-w-4xl">
         <PageHeader kicker={c.assistant.kicker} heading={c.assistant.heading} sub={c.assistant.sub} />
 
         <div className="glass rounded-3xl overflow-hidden flex flex-col h-[68vh] min-h-[460px]">
@@ -207,7 +207,7 @@ function AssistantPage() {
             </button>
           </form>
         </div>
-      </div>
+      </div></div>
     </section>
   );
 }

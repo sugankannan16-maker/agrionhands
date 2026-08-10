@@ -41,7 +41,7 @@ export function ModuleLayout({
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+    <div className="container-page py-8 md:py-12">
       <div className="grid gap-6 lg:grid-cols-[240px_1fr]">
         <aside className="lg:sticky lg:top-24 lg:self-start">
           <nav className="glass rounded-3xl p-3">

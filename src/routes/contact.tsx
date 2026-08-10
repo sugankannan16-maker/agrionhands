@@ -27,8 +27,8 @@ function ContactPage() {
   ];
 
   return (
-    <section className="py-14 md:py-20 px-4 md:px-6">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 items-start">
+    <section className="py-14 md:py-20">
+      <div className="container-page grid lg:grid-cols-2 gap-10 items-start">
         <div>
           <PageHeader kicker={c.contact.kicker} heading={c.contact.heading} sub={c.contact.sub} />
           <div className="flex flex-wrap gap-3 -mt-4">
