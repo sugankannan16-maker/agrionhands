@@ -89,25 +89,25 @@ export function Nav() {
 
   return (
     <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
-      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-3">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 grid grid-cols-[minmax(0,auto)_1fr_auto] items-center gap-4 lg:gap-8">
         <Logo />
-        <div className="hidden lg:flex gap-7 text-sm font-medium text-grass-800">
+        <div className="hidden lg:flex justify-center gap-x-6 text-sm font-medium text-grass-800">
           {links.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className="story-link hover:text-grass-900 aria-[current=page]:text-grass-900 aria-[current=page]:font-semibold"
+              className="story-link whitespace-nowrap hover:text-grass-900 aria-[current=page]:text-grass-900 aria-[current=page]:font-semibold"
             >
               {l.label}
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="flex items-center justify-end gap-2 md:gap-3">
           <div className="hidden md:block"><WeatherSwitch /></div>
           <LangToggle />
           <Link
             to="/assistant"
-            className="ripple-btn hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900"
+            className="ripple-btn hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 whitespace-nowrap"
           >
             {c.nav.assistant}
           </Link>
