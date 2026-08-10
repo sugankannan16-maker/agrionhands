@@ -107,11 +107,11 @@ export function Nav() {
             ))}
         </div>
         <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
-          <div className="hidden xl:block"><WeatherSwitch /></div>
+          <div className="hidden 2xl:block"><WeatherSwitch /></div>
           <LangToggle />
           <Link
             to="/assistant"
-            className="ripple-btn hidden xl:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 whitespace-nowrap"
+            className="ripple-btn hidden 2xl:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 whitespace-nowrap"
           >
             {c.nav.assistant}
           </Link>
