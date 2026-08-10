@@ -93,27 +93,29 @@ export function Nav() {
     <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
       <div className="container-page h-16 flex items-center justify-between gap-4 lg:gap-8">
         <Logo />
-        <div className="hidden lg:flex flex-1 min-w-0 justify-center gap-x-5 xl:gap-x-7 text-sm font-medium text-grass-800">
-
-          {links.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              className="story-link whitespace-nowrap hover:text-grass-900 aria-[current=page]:text-grass-900 aria-[current=page]:font-semibold"
-            >
-              {l.label}
-            </Link>
-          ))}
+        <div className="hidden lg:flex flex-1 min-w-0 items-center justify-center gap-x-4 xl:gap-x-6 text-[0.8125rem] xl:text-sm font-medium text-grass-800">
+          {links
+            .filter((l) => l.to !== "/")
+            .map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                className="story-link whitespace-nowrap hover:text-grass-900 aria-[current=page]:text-grass-900 aria-[current=page]:font-semibold"
+              >
+                {l.label}
+              </Link>
+            ))}
         </div>
-        <div className="flex items-center justify-end gap-2 md:gap-3">
-          <div className="hidden md:block"><WeatherSwitch /></div>
+        <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
+          <div className="hidden xl:block"><WeatherSwitch /></div>
           <LangToggle />
           <Link
             to="/assistant"
-            className="ripple-btn hidden sm:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 whitespace-nowrap"
+            className="ripple-btn hidden xl:inline-flex bg-grass-800 text-grass-50 text-sm font-medium py-2 px-4 rounded-full hover:bg-grass-900 whitespace-nowrap"
           >
             {c.nav.assistant}
           </Link>
+
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
