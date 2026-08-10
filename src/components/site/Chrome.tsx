@@ -7,13 +7,13 @@ import { LeafIcon } from "./Icons";
 
 export function Logo() {
   return (
-    <Link to="/" className="flex items-center gap-2.5">
+    <Link to="/" className="flex min-w-0 items-center gap-2 shrink-0">
       <div className="size-8 rounded-full bg-grass-800 grid place-items-center shrink-0">
         <LeafIcon className="size-4 text-sun-500" />
       </div>
       <span
-        className="text-2xl md:text-3xl leading-none text-grass-900 tracking-tight"
-        style={{ fontFamily: "var(--font-display)" }}
+        className="text-lg md:text-xl leading-none text-grass-900 tracking-tight whitespace-nowrap"
+        style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
       >
         Agri on Hands
       </span>
