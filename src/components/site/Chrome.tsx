@@ -139,7 +139,7 @@ export function Nav() {
               {l.label}
             </Link>
           ))}
-          <div className="pt-3 md:hidden"><WeatherSwitch /></div>
+          <div className="pt-3"><WeatherSwitch /></div>
         </div>
       )}
     </nav>
