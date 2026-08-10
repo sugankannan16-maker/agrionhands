@@ -91,9 +91,10 @@ export function Nav() {
 
   return (
     <nav className="sticky top-0 z-50 glass border-b border-grass-800/10">
-      <div className="container-page h-16 grid grid-cols-[minmax(0,auto)_1fr_auto] items-center gap-4 lg:gap-8">
+      <div className="container-page h-16 flex items-center justify-between gap-4 lg:gap-8">
         <Logo />
-        <div className="hidden lg:flex justify-center gap-x-6 text-sm font-medium text-grass-800">
+        <div className="hidden lg:flex flex-1 min-w-0 justify-center gap-x-5 xl:gap-x-7 text-sm font-medium text-grass-800">
+
           {links.map((l) => (
             <Link
               key={l.to}
