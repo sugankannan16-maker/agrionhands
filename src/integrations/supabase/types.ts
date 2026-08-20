@@ -172,6 +172,7 @@ export type Database = {
           contact_phone: string | null
           created_at: string
           id: string
+          payment_method: string
           shipping_address: string
           status: string
           total: number
@@ -181,6 +182,7 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string
           id?: string
+          payment_method?: string
           shipping_address?: string
           status?: string
           total?: number
@@ -190,6 +192,7 @@ export type Database = {
           contact_phone?: string | null
           created_at?: string
           id?: string
+          payment_method?: string
           shipping_address?: string
           status?: string
           total?: number
@@ -280,6 +283,66 @@ export type Database = {
           location?: string | null
           phone?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      sell_requests: {
+        Row: {
+          created_at: string
+          crop_name: string
+          expected_price: number
+          grade: string | null
+          harvest_date: string | null
+          id: string
+          location: string
+          mobile: string
+          notes: string | null
+          organic: boolean
+          photo_path: string | null
+          quantity: string
+          ref_code: string
+          seller_name: string
+          status: string
+          user_id: string
+          variety: string | null
+        }
+        Insert: {
+          created_at?: string
+          crop_name: string
+          expected_price?: number
+          grade?: string | null
+          harvest_date?: string | null
+          id?: string
+          location: string
+          mobile: string
+          notes?: string | null
+          organic?: boolean
+          photo_path?: string | null
+          quantity: string
+          ref_code?: string
+          seller_name: string
+          status?: string
+          user_id: string
+          variety?: string | null
+        }
+        Update: {
+          created_at?: string
+          crop_name?: string
+          expected_price?: number
+          grade?: string | null
+          harvest_date?: string | null
+          id?: string
+          location?: string
+          mobile?: string
+          notes?: string | null
+          organic?: boolean
+          photo_path?: string | null
+          quantity?: string
+          ref_code?: string
+          seller_name?: string
+          status?: string
+          user_id?: string
+          variety?: string | null
         }
         Relationships: []
       }
