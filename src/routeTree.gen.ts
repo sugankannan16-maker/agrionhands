@@ -33,6 +33,7 @@ import { Route as AuthenticatedSellerInventoryRouteImport } from './routes/_auth
 import { Route as AuthenticatedSellerDashboardRouteImport } from './routes/_authenticated/seller.dashboard'
 import { Route as AuthenticatedSellerAnalyticsRouteImport } from './routes/_authenticated/seller.analytics'
 import { Route as AuthenticatedSellerAddProductRouteImport } from './routes/_authenticated/seller.add-product'
+import { Route as AuthenticatedMarketBuyRouteImport } from './routes/_authenticated/market.buy'
 import { Route as AuthenticatedBuyerWishlistRouteImport } from './routes/_authenticated/buyer.wishlist'
 import { Route as AuthenticatedBuyerSettingsRouteImport } from './routes/_authenticated/buyer.settings'
 import { Route as AuthenticatedBuyerOrdersRouteImport } from './routes/_authenticated/buyer.orders'
@@ -168,6 +169,11 @@ const AuthenticatedSellerAddProductRoute =
     path: '/seller/add-product',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMarketBuyRoute = AuthenticatedMarketBuyRouteImport.update({
+  id: '/market/buy',
+  path: '/market/buy',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedBuyerWishlistRoute =
   AuthenticatedBuyerWishlistRouteImport.update({
     id: '/buyer/wishlist',
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/buyer/orders': typeof AuthenticatedBuyerOrdersRoute
   '/buyer/settings': typeof AuthenticatedBuyerSettingsRoute
   '/buyer/wishlist': typeof AuthenticatedBuyerWishlistRoute
+  '/market/buy': typeof AuthenticatedMarketBuyRoute
   '/seller/add-product': typeof AuthenticatedSellerAddProductRoute
   '/seller/analytics': typeof AuthenticatedSellerAnalyticsRoute
   '/seller/dashboard': typeof AuthenticatedSellerDashboardRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/buyer/orders': typeof AuthenticatedBuyerOrdersRoute
   '/buyer/settings': typeof AuthenticatedBuyerSettingsRoute
   '/buyer/wishlist': typeof AuthenticatedBuyerWishlistRoute
+  '/market/buy': typeof AuthenticatedMarketBuyRoute
   '/seller/add-product': typeof AuthenticatedSellerAddProductRoute
   '/seller/analytics': typeof AuthenticatedSellerAnalyticsRoute
   '/seller/dashboard': typeof AuthenticatedSellerDashboardRoute
@@ -299,6 +307,7 @@ export interface FileRoutesById {
   '/_authenticated/buyer/orders': typeof AuthenticatedBuyerOrdersRoute
   '/_authenticated/buyer/settings': typeof AuthenticatedBuyerSettingsRoute
   '/_authenticated/buyer/wishlist': typeof AuthenticatedBuyerWishlistRoute
+  '/_authenticated/market/buy': typeof AuthenticatedMarketBuyRoute
   '/_authenticated/seller/add-product': typeof AuthenticatedSellerAddProductRoute
   '/_authenticated/seller/analytics': typeof AuthenticatedSellerAnalyticsRoute
   '/_authenticated/seller/dashboard': typeof AuthenticatedSellerDashboardRoute
@@ -333,6 +342,7 @@ export interface FileRouteTypes {
     | '/buyer/orders'
     | '/buyer/settings'
     | '/buyer/wishlist'
+    | '/market/buy'
     | '/seller/add-product'
     | '/seller/analytics'
     | '/seller/dashboard'
@@ -365,6 +375,7 @@ export interface FileRouteTypes {
     | '/buyer/orders'
     | '/buyer/settings'
     | '/buyer/wishlist'
+    | '/market/buy'
     | '/seller/add-product'
     | '/seller/analytics'
     | '/seller/dashboard'
@@ -398,6 +409,7 @@ export interface FileRouteTypes {
     | '/_authenticated/buyer/orders'
     | '/_authenticated/buyer/settings'
     | '/_authenticated/buyer/wishlist'
+    | '/_authenticated/market/buy'
     | '/_authenticated/seller/add-product'
     | '/_authenticated/seller/analytics'
     | '/_authenticated/seller/dashboard'
@@ -596,6 +608,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSellerAddProductRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/market/buy': {
+      id: '/_authenticated/market/buy'
+      path: '/market/buy'
+      fullPath: '/market/buy'
+      preLoaderRoute: typeof AuthenticatedMarketBuyRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/buyer/wishlist': {
       id: '/_authenticated/buyer/wishlist'
       path: '/buyer/wishlist'
@@ -657,6 +676,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBuyerOrdersRoute: typeof AuthenticatedBuyerOrdersRoute
   AuthenticatedBuyerSettingsRoute: typeof AuthenticatedBuyerSettingsRoute
   AuthenticatedBuyerWishlistRoute: typeof AuthenticatedBuyerWishlistRoute
+  AuthenticatedMarketBuyRoute: typeof AuthenticatedMarketBuyRoute
   AuthenticatedSellerAddProductRoute: typeof AuthenticatedSellerAddProductRoute
   AuthenticatedSellerAnalyticsRoute: typeof AuthenticatedSellerAnalyticsRoute
   AuthenticatedSellerDashboardRoute: typeof AuthenticatedSellerDashboardRoute
@@ -676,6 +696,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBuyerOrdersRoute: AuthenticatedBuyerOrdersRoute,
   AuthenticatedBuyerSettingsRoute: AuthenticatedBuyerSettingsRoute,
   AuthenticatedBuyerWishlistRoute: AuthenticatedBuyerWishlistRoute,
+  AuthenticatedMarketBuyRoute: AuthenticatedMarketBuyRoute,
   AuthenticatedSellerAddProductRoute: AuthenticatedSellerAddProductRoute,
   AuthenticatedSellerAnalyticsRoute: AuthenticatedSellerAnalyticsRoute,
   AuthenticatedSellerDashboardRoute: AuthenticatedSellerDashboardRoute,
