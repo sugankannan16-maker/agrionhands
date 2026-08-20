@@ -24,6 +24,7 @@ import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-pas
 import { Route as AuthBuyerRegisterRouteImport } from './routes/auth.buyer-register'
 import { Route as AuthBuyerLoginRouteImport } from './routes/auth.buyer-login'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedSellerSettingsRouteImport } from './routes/_authenticated/seller.settings'
 import { Route as AuthenticatedSellerProductsRouteImport } from './routes/_authenticated/seller.products'
@@ -114,6 +115,12 @@ const ApiChatRoute = ApiChatRouteImport.update({
   path: '/api/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedMarketplaceRoute =
+  AuthenticatedMarketplaceRouteImport.update({
+    id: '/marketplace',
+    path: '/marketplace',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
   id: '/history',
   path: '/history',
@@ -212,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/predict': typeof PredictRoute
   '/weather': typeof WeatherRoute
   '/history': typeof AuthenticatedHistoryRoute
+  '/marketplace': typeof AuthenticatedMarketplaceRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -243,6 +251,7 @@ export interface FileRoutesByTo {
   '/predict': typeof PredictRoute
   '/weather': typeof WeatherRoute
   '/history': typeof AuthenticatedHistoryRoute
+  '/marketplace': typeof AuthenticatedMarketplaceRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -276,6 +285,7 @@ export interface FileRoutesById {
   '/predict': typeof PredictRoute
   '/weather': typeof WeatherRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
+  '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -309,6 +319,7 @@ export interface FileRouteTypes {
     | '/predict'
     | '/weather'
     | '/history'
+    | '/marketplace'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -340,6 +351,7 @@ export interface FileRouteTypes {
     | '/predict'
     | '/weather'
     | '/history'
+    | '/marketplace'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -372,6 +384,7 @@ export interface FileRouteTypes {
     | '/predict'
     | '/weather'
     | '/_authenticated/history'
+    | '/_authenticated/marketplace'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -520,6 +533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/marketplace': {
+      id: '/_authenticated/marketplace'
+      path: '/marketplace'
+      fullPath: '/marketplace'
+      preLoaderRoute: typeof AuthenticatedMarketplaceRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/history': {
       id: '/_authenticated/history'
       path: '/history'
@@ -630,6 +650,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
+  AuthenticatedMarketplaceRoute: typeof AuthenticatedMarketplaceRoute
   AuthenticatedBuyerBrowseRoute: typeof AuthenticatedBuyerBrowseRoute
   AuthenticatedBuyerCartRoute: typeof AuthenticatedBuyerCartRoute
   AuthenticatedBuyerDashboardRoute: typeof AuthenticatedBuyerDashboardRoute
@@ -648,6 +669,7 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
+  AuthenticatedMarketplaceRoute: AuthenticatedMarketplaceRoute,
   AuthenticatedBuyerBrowseRoute: AuthenticatedBuyerBrowseRoute,
   AuthenticatedBuyerCartRoute: AuthenticatedBuyerCartRoute,
   AuthenticatedBuyerDashboardRoute: AuthenticatedBuyerDashboardRoute,
