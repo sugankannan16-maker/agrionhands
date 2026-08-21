@@ -81,7 +81,7 @@ export function LoginForm({ role }: { role: "buyer" | "seller" }) {
       return;
     }
     toast.success("Welcome back!");
-    navigate({ to: "/marketplace" });
+    navigate({ to: role === "buyer" ? "/market/buy" : "/marketplace" });
   }
 
   return (
