@@ -131,7 +131,7 @@ export function RegisterForm({ role }: { role: "buyer" | "seller" }) {
       return;
     }
     toast.success("Account created. Welcome to Agri on Hands!");
-    navigate({ to: role === "buyer" ? "/buyer/dashboard" : "/seller/dashboard" });
+    navigate({ to: "/marketplace" });
   }
 
   return (
