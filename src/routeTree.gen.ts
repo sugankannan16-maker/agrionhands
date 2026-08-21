@@ -40,6 +40,7 @@ import { Route as AuthenticatedBuyerOrdersRouteImport } from './routes/_authenti
 import { Route as AuthenticatedBuyerDashboardRouteImport } from './routes/_authenticated/buyer.dashboard'
 import { Route as AuthenticatedBuyerCartRouteImport } from './routes/_authenticated/buyer.cart'
 import { Route as AuthenticatedBuyerBrowseRouteImport } from './routes/_authenticated/buyer.browse'
+import { Route as AuthenticatedMarketOrderIdRouteImport } from './routes/_authenticated/market.order.$id'
 import { Route as AuthenticatedMarketCheckoutIdRouteImport } from './routes/_authenticated/market.checkout.$id'
 import { Route as AuthenticatedBuyerProductIdRouteImport } from './routes/_authenticated/buyer.product.$id'
 
@@ -210,6 +211,12 @@ const AuthenticatedBuyerBrowseRoute =
     path: '/buyer/browse',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMarketOrderIdRoute =
+  AuthenticatedMarketOrderIdRouteImport.update({
+    id: '/market/order/$id',
+    path: '/market/order/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMarketCheckoutIdRoute =
   AuthenticatedMarketCheckoutIdRouteImport.update({
     id: '/market/checkout/$id',
@@ -256,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/seller/settings': typeof AuthenticatedSellerSettingsRoute
   '/buyer/product/$id': typeof AuthenticatedBuyerProductIdRoute
   '/market/checkout/$id': typeof AuthenticatedMarketCheckoutIdRoute
+  '/market/order/$id': typeof AuthenticatedMarketOrderIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -290,6 +298,7 @@ export interface FileRoutesByTo {
   '/seller/settings': typeof AuthenticatedSellerSettingsRoute
   '/buyer/product/$id': typeof AuthenticatedBuyerProductIdRoute
   '/market/checkout/$id': typeof AuthenticatedMarketCheckoutIdRoute
+  '/market/order/$id': typeof AuthenticatedMarketOrderIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -326,6 +335,7 @@ export interface FileRoutesById {
   '/_authenticated/seller/settings': typeof AuthenticatedSellerSettingsRoute
   '/_authenticated/buyer/product/$id': typeof AuthenticatedBuyerProductIdRoute
   '/_authenticated/market/checkout/$id': typeof AuthenticatedMarketCheckoutIdRoute
+  '/_authenticated/market/order/$id': typeof AuthenticatedMarketOrderIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -362,6 +372,7 @@ export interface FileRouteTypes {
     | '/seller/settings'
     | '/buyer/product/$id'
     | '/market/checkout/$id'
+    | '/market/order/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -396,6 +407,7 @@ export interface FileRouteTypes {
     | '/seller/settings'
     | '/buyer/product/$id'
     | '/market/checkout/$id'
+    | '/market/order/$id'
   id:
     | '__root__'
     | '/'
@@ -431,6 +443,7 @@ export interface FileRouteTypes {
     | '/_authenticated/seller/settings'
     | '/_authenticated/buyer/product/$id'
     | '/_authenticated/market/checkout/$id'
+    | '/_authenticated/market/order/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -670,6 +683,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBuyerBrowseRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/market/order/$id': {
+      id: '/_authenticated/market/order/$id'
+      path: '/market/order/$id'
+      fullPath: '/market/order/$id'
+      preLoaderRoute: typeof AuthenticatedMarketOrderIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/market/checkout/$id': {
       id: '/_authenticated/market/checkout/$id'
       path: '/market/checkout/$id'
@@ -706,6 +726,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSellerSettingsRoute: typeof AuthenticatedSellerSettingsRoute
   AuthenticatedBuyerProductIdRoute: typeof AuthenticatedBuyerProductIdRoute
   AuthenticatedMarketCheckoutIdRoute: typeof AuthenticatedMarketCheckoutIdRoute
+  AuthenticatedMarketOrderIdRoute: typeof AuthenticatedMarketOrderIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -727,6 +748,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSellerSettingsRoute: AuthenticatedSellerSettingsRoute,
   AuthenticatedBuyerProductIdRoute: AuthenticatedBuyerProductIdRoute,
   AuthenticatedMarketCheckoutIdRoute: AuthenticatedMarketCheckoutIdRoute,
+  AuthenticatedMarketOrderIdRoute: AuthenticatedMarketOrderIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
