@@ -53,7 +53,7 @@ function Page() {
           <h1 className="text-3xl md:text-4xl text-leaf-gradient" style={{ fontFamily: "var(--font-display)" }}>
             Buy Crops
           </h1>
-          <p className="mt-2 text-sm text-grass-700">Fresh from the field — pick a crop and pay in seconds.</p>
+          <p className="mt-2 text-sm text-grass-700">Fresh from the field — buy online and pay securely with GPay or PhonePe.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <input
