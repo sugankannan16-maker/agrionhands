@@ -22,11 +22,11 @@ function Page() {
     <div className="container-page py-10 md:py-16">
       <header className="text-center">
         <h1 className="text-4xl md:text-5xl text-leaf-gradient" style={{ fontFamily: "var(--font-display)" }}>
-          Crop Marketplace
+          Continue as
         </h1>
         <p className="mt-3 text-sm md:text-base text-grass-700">
           {profile?.full_name ? `Welcome back, ${profile.full_name.split(" ")[0]}. ` : ""}
-          What would you like to do today?
+          Choose how you want to use the crop marketplace today.
         </p>
       </header>
 
@@ -39,13 +39,13 @@ function Page() {
             🧺
           </span>
           <h2 className="mt-5 text-2xl text-grass-900" style={{ fontFamily: "var(--font-display)" }}>
-            Buy Crops
+            I'm a Buyer
           </h2>
           <p className="mt-2 text-sm text-grass-700">
             Browse fresh harvests with prices and quantities, then pay securely with GPay or PhonePe.
           </p>
           <span className="ripple-btn mt-6 inline-block rounded-full bg-grass-800 px-6 py-2.5 text-sm font-semibold text-grass-50">
-            Start buying
+            Buy crops
           </span>
         </Link>
 
@@ -57,13 +57,13 @@ function Page() {
             🌾
           </span>
           <h2 className="mt-5 text-2xl text-grass-900" style={{ fontFamily: "var(--font-display)" }}>
-            Sell Crops
+            I'm a Seller
           </h2>
           <p className="mt-2 text-sm text-grass-700">
             Tell us about your harvest — crop, quantity, price and photo — and we will list it for buyers.
           </p>
           <span className="ripple-btn mt-6 inline-block rounded-full bg-grass-800 px-6 py-2.5 text-sm font-semibold text-grass-50">
-            Start selling
+            Sell crops
           </span>
         </Link>
       </div>
