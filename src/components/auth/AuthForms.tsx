@@ -3,6 +3,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Logo } from "@/components/site/Chrome";
+import { Button } from "@/components/ui/button";
 
 export function AuthShell({
   title,
@@ -62,19 +63,47 @@ export function LoginForm({ role }: { role: "buyer" | "seller" }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
+  const [resending, setResending] = useState(false);
   const navigate = useNavigate();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
+    setNeedsConfirmation(false);
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
     setBusy(false);
     if (error) {
-      toast.error(error.message);
+      if (error.code === "email_not_confirmed") {
+        setNeedsConfirmation(true);
+        toast.error("Confirm your email before signing in.");
+      } else {
+        toast.error(error.message);
+      }
       return;
     }
     toast.success("Welcome back!");
     navigate({ to: "/marketplace" });
+  }
+
+  async function resendConfirmation() {
+    const normalizedEmail = email.trim();
+    if (!normalizedEmail) {
+      toast.error("Enter your email address first.");
+      return;
+    }
+    setResending(true);
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: normalizedEmail,
+      options: { emailRedirectTo: `${window.location.origin}/auth/buyer-login` },
+    });
+    setResending(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Confirmation email sent. Please check your inbox and spam folder.");
   }
 
   return (
@@ -82,6 +111,22 @@ export function LoginForm({ role }: { role: "buyer" | "seller" }) {
       <Field label="Email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
       <Field label="Password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" />
       <SubmitButton busy={busy}>Sign in</SubmitButton>
+      {needsConfirmation && (
+        <div role="alert" className="rounded-xl border border-grass-800/15 bg-grass-50/80 p-3 text-center">
+          <p className="text-sm font-semibold text-grass-900">Please confirm your email</p>
+          <p className="mt-1 text-xs text-grass-700">Open the confirmation link we sent, then return here to sign in.</p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            disabled={resending}
+            onClick={resendConfirmation}
+            className="mt-3 rounded-full border-grass-800/20 bg-transparent text-grass-800 hover:bg-grass-800/10"
+          >
+            {resending ? "Sending…" : "Resend confirmation email"}
+          </Button>
+        </div>
+      )}
       <p className="text-center text-xs text-grass-700">
         <Link to="/auth/forgot-password" className="story-link">Forgot your password?</Link>
       </p>
@@ -104,7 +149,7 @@ export function RegisterForm({ role }: { role: "buyer" | "seller" }) {
       return;
     }
     setBusy(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email: form.email.trim(),
       password: form.password,
       options: {
@@ -121,6 +166,11 @@ export function RegisterForm({ role }: { role: "buyer" | "seller" }) {
     setBusy(false);
     if (error) {
       toast.error(error.message);
+      return;
+    }
+    if (!data.session) {
+      toast.success("Account created. Check your email to confirm your account before signing in.");
+      navigate({ to: role === "buyer" ? "/auth/buyer-login" : "/auth/seller-login" });
       return;
     }
     toast.success("Account created. Welcome to Agri on Hands!");
