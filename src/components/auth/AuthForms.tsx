@@ -67,21 +67,14 @@ export function LoginForm({ role }: { role: "buyer" | "seller" }) {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-    const { data, error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
+    setBusy(false);
     if (error) {
-      setBusy(false);
       toast.error(error.message);
       return;
     }
-    const { data: roles } = await supabase.from("user_roles").select("role").eq("user_id", data.user.id);
-    const list = (roles ?? []).map((r) => r.role);
-    setBusy(false);
-    if (!list.includes(role)) {
-      toast.error(`This account is not registered as a ${role}.`);
-      return;
-    }
     toast.success("Welcome back!");
-    navigate({ to: role === "buyer" ? "/market/buy" : "/marketplace" });
+    navigate({ to: "/marketplace" });
   }
 
   return (
