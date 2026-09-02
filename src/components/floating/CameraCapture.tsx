@@ -41,6 +41,7 @@ export default function CameraCapture() {
   const [preview, setPreview] = useState<string | null>(null);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [analysis, setAnalysis] = useState<CaptureAnalysis | null>(null);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -54,6 +55,7 @@ export default function CameraCapture() {
     setMessage("");
     setPreview(null);
     setAnalysis(null);
+    setAnalysisError(null);
     setProgress(0);
     void getPosition().then((p) => p && setCoords({ lat: p.coords.latitude, lng: p.coords.longitude }));
     try {
@@ -128,10 +130,15 @@ export default function CameraCapture() {
             captureAnalysis = result.analysis;
             setAnalysis(result.analysis);
           }
+        } else {
+          const detail = (await analysisResponse.text()).trim();
+          setAnalysisError(detail || "Image analysis failed.");
         }
+      } else {
+        setAnalysisError("Image analysis needs an active sign-in session.");
       }
     } catch {
-      /* The photo should still be saved if analysis is unavailable. */
+      setAnalysisError("Image analysis is temporarily unavailable. The photo was still saved.");
     }
     setProgress(80);
 
@@ -164,7 +171,8 @@ export default function CameraCapture() {
     });
     setPhase("done");
     setMessage("Photo uploaded and saved to your history.");
-  }, [user, coords, stopStream]);
+    if (analysisError) setMessage(`Photo saved. Analysis unavailable: ${analysisError}`);
+  }, [user, coords, stopStream, analysisError]);
 
   const close = () => {
     stopStream();
@@ -172,6 +180,7 @@ export default function CameraCapture() {
     setPhase("idle");
     setPreview(null);
     setAnalysis(null);
+    setAnalysisError(null);
     setMessage("");
   };
 
