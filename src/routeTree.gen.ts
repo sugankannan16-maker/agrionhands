@@ -24,6 +24,7 @@ import { Route as AuthForgotPasswordRouteImport } from './routes/auth.forgot-pas
 import { Route as AuthBuyerRegisterRouteImport } from './routes/auth.buyer-register'
 import { Route as AuthBuyerLoginRouteImport } from './routes/auth.buyer-login'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
+import { Route as ApiCaptureAnalyzeRouteImport } from './routes/api/capture-analyze'
 import { Route as AuthenticatedMarketplaceRouteImport } from './routes/_authenticated/marketplace'
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedSellerSettingsRouteImport } from './routes/_authenticated/seller.settings'
@@ -117,6 +118,11 @@ const AuthBuyerLoginRoute = AuthBuyerLoginRouteImport.update({
 const ApiChatRoute = ApiChatRouteImport.update({
   id: '/api/chat',
   path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCaptureAnalyzeRoute = ApiCaptureAnalyzeRouteImport.update({
+  id: '/api/capture-analyze',
+  path: '/api/capture-analyze',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedMarketplaceRoute =
@@ -246,6 +252,7 @@ export interface FileRoutesByFullPath {
   '/weather': typeof WeatherRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/marketplace': typeof AuthenticatedMarketplaceRoute
+  '/api/capture-analyze': typeof ApiCaptureAnalyzeRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -282,6 +289,7 @@ export interface FileRoutesByTo {
   '/weather': typeof WeatherRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/marketplace': typeof AuthenticatedMarketplaceRoute
+  '/api/capture-analyze': typeof ApiCaptureAnalyzeRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -320,6 +328,7 @@ export interface FileRoutesById {
   '/weather': typeof WeatherRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
   '/_authenticated/marketplace': typeof AuthenticatedMarketplaceRoute
+  '/api/capture-analyze': typeof ApiCaptureAnalyzeRoute
   '/api/chat': typeof ApiChatRoute
   '/auth/buyer-login': typeof AuthBuyerLoginRoute
   '/auth/buyer-register': typeof AuthBuyerRegisterRoute
@@ -358,6 +367,7 @@ export interface FileRouteTypes {
     | '/weather'
     | '/history'
     | '/marketplace'
+    | '/api/capture-analyze'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -394,6 +404,7 @@ export interface FileRouteTypes {
     | '/weather'
     | '/history'
     | '/marketplace'
+    | '/api/capture-analyze'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -431,6 +442,7 @@ export interface FileRouteTypes {
     | '/weather'
     | '/_authenticated/history'
     | '/_authenticated/marketplace'
+    | '/api/capture-analyze'
     | '/api/chat'
     | '/auth/buyer-login'
     | '/auth/buyer-register'
@@ -467,6 +479,7 @@ export interface RootRouteChildren {
   FeaturesRoute: typeof FeaturesRoute
   PredictRoute: typeof PredictRoute
   WeatherRoute: typeof WeatherRoute
+  ApiCaptureAnalyzeRoute: typeof ApiCaptureAnalyzeRoute
   ApiChatRoute: typeof ApiChatRoute
   AuthBuyerLoginRoute: typeof AuthBuyerLoginRoute
   AuthBuyerRegisterRoute: typeof AuthBuyerRegisterRoute
@@ -581,6 +594,13 @@ declare module '@tanstack/react-router' {
       path: '/api/chat'
       fullPath: '/api/chat'
       preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/capture-analyze': {
+      id: '/api/capture-analyze'
+      path: '/api/capture-analyze'
+      fullPath: '/api/capture-analyze'
+      preLoaderRoute: typeof ApiCaptureAnalyzeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/marketplace': {
@@ -784,6 +804,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeaturesRoute: FeaturesRoute,
   PredictRoute: PredictRoute,
   WeatherRoute: WeatherRoute,
+  ApiCaptureAnalyzeRoute: ApiCaptureAnalyzeRoute,
   ApiChatRoute: ApiChatRoute,
   AuthBuyerLoginRoute: AuthBuyerLoginRoute,
   AuthBuyerRegisterRoute: AuthBuyerRegisterRoute,

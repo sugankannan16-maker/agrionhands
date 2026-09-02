@@ -5,6 +5,12 @@ import { useAuthUser } from "@/lib/auth";
 
 type Phase = "idle" | "starting" | "live" | "uploading" | "done" | "error";
 
+type CaptureAnalysis = {
+  soilType: string;
+  moistureContent: string;
+  features: string[];
+};
+
 function getPosition(): Promise<GeolocationPosition | null> {
   if (typeof navigator === "undefined" || !navigator.geolocation) return Promise.resolve(null);
   return new Promise((resolve) => {
@@ -34,6 +40,8 @@ export default function CameraCapture() {
   const [progress, setProgress] = useState(0);
   const [preview, setPreview] = useState<string | null>(null);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
+  const [analysis, setAnalysis] = useState<CaptureAnalysis | null>(null);
+  const [analysisError, setAnalysisError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -46,6 +54,8 @@ export default function CameraCapture() {
     setPhase("starting");
     setMessage("");
     setPreview(null);
+    setAnalysis(null);
+    setAnalysisError(null);
     setProgress(0);
     void getPosition().then((p) => p && setCoords({ lat: p.coords.latitude, lng: p.coords.longitude }));
     try {
@@ -86,7 +96,8 @@ export default function CameraCapture() {
     const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/jpeg", 0.86));
     if (!blob) return;
 
-    setPreview(canvas.toDataURL("image/jpeg", 0.5));
+    const imageDataUrl = canvas.toDataURL("image/jpeg", 0.72);
+    setPreview(imageDataUrl);
     stopStream();
     setPhase("uploading");
     setProgress(25);
@@ -101,7 +112,39 @@ export default function CameraCapture() {
       setMessage(`Upload failed: ${upErr.message}`);
       return;
     }
-    setProgress(70);
+    setProgress(55);
+
+    let captureAnalysis: CaptureAnalysis | null = null;
+    let captureAnalysisError: string | null = null;
+    try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (token) {
+        const analysisResponse = await fetch("/api/capture-analyze", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify({ imageDataUrl }),
+        });
+        if (analysisResponse.ok) {
+          const result = (await analysisResponse.json()) as { analysis?: CaptureAnalysis };
+          if (result.analysis?.soilType && result.analysis.moistureContent && result.analysis.features?.length) {
+            captureAnalysis = result.analysis;
+            setAnalysis(result.analysis);
+          }
+        } else {
+          const detail = (await analysisResponse.text()).trim();
+          captureAnalysisError = detail || "Image analysis failed.";
+          setAnalysisError(captureAnalysisError);
+        }
+      } else {
+        captureAnalysisError = "Image analysis needs an active sign-in session.";
+        setAnalysisError(captureAnalysisError);
+      }
+    } catch {
+      captureAnalysisError = "Image analysis is temporarily unavailable. The photo was still saved.";
+      setAnalysisError(captureAnalysisError);
+    }
+    setProgress(80);
 
     const point = coords ?? (await getPosition().then((p) => (p ? { lat: p.coords.latitude, lng: p.coords.longitude } : null)));
     const { error: dbErr } = await supabase.from("captures").insert({
@@ -110,6 +153,8 @@ export default function CameraCapture() {
       storage_path: path,
       latitude: point?.lat ?? null,
       longitude: point?.lng ?? null,
+      prediction: captureAnalysis ? `Soil type: ${captureAnalysis.soilType}\nMoisture: ${captureAnalysis.moistureContent}` : null,
+      note: captureAnalysis ? `Features: ${captureAnalysis.features.join(" • ")}` : null,
     });
     if (dbErr) {
       setPhase("error");
@@ -120,12 +165,16 @@ export default function CameraCapture() {
     await logActivity({
       category: "capture",
       title: "Field photo captured",
-      detail: point ? `GPS ${point.lat.toFixed(5)}, ${point.lng.toFixed(5)}` : "No GPS available",
-      meta: { path, ...(point ?? {}) },
+      detail: captureAnalysis
+        ? `${captureAnalysis.soilType} · ${captureAnalysis.moistureContent}`
+        : point
+          ? `GPS ${point.lat.toFixed(5)}, ${point.lng.toFixed(5)}`
+          : "No GPS available",
+      meta: { path, ...(point ?? {}), ...(captureAnalysis ?? {}) },
       link: "/history",
     });
     setPhase("done");
-    setMessage("Photo uploaded and saved to your history.");
+    setMessage(captureAnalysisError ? `Photo saved. Analysis unavailable: ${captureAnalysisError}` : "Photo uploaded and saved to your history.");
   }, [user, coords, stopStream]);
 
   const close = () => {
@@ -133,6 +182,8 @@ export default function CameraCapture() {
     setOpen(false);
     setPhase("idle");
     setPreview(null);
+    setAnalysis(null);
+    setAnalysisError(null);
     setMessage("");
   };
 
@@ -180,6 +231,16 @@ export default function CameraCapture() {
                 <p role="status" className={`text-sm ${phase === "error" ? "text-destructive" : "text-grass-800"}`}>
                   {message}
                 </p>
+              )}
+              {analysis && (
+                <div className="rounded-2xl bg-grass-100/80 p-3 text-sm text-grass-900 space-y-2">
+                  <div className="flex flex-wrap gap-x-4 gap-y-1">
+                    <p><span className="font-semibold">Soil type:</span> {analysis.soilType}</p>
+                    <p><span className="font-semibold">Moisture:</span> {analysis.moistureContent}</p>
+                  </div>
+                  <p><span className="font-semibold">Photo features:</span> {analysis.features.join(" • ")}</p>
+                  <p className="text-[11px] text-grass-700">Visual estimate only — use a soil test or moisture sensor for accurate readings.</p>
+                </div>
               )}
               <div className="flex flex-wrap gap-2">
                 {phase === "live" && (

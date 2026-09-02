@@ -25,8 +25,18 @@ type Row = {
   detail: string;
   link: string | null;
   created_at: string;
+  analysis?: { soilType: string; moistureContent: string; features: string[] } | null;
   capture?: { path: string; lat: number | null; lng: number | null } | null;
 };
+
+function getCaptureAnalysis(prediction: string | null, note: string | null) {
+  if (!prediction && !note) return null;
+  const soilType = prediction?.match(/Soil type:\s*([^\n]+)/i)?.[1]?.trim();
+  const moistureContent = prediction?.match(/Moisture:\s*([^\n]+)/i)?.[1]?.trim();
+  const features = note?.match(/Features:\s*(.*)/i)?.[1]?.split(" • ").map((feature) => feature.trim()).filter(Boolean) ?? [];
+  if (!soilType || !moistureContent || features.length === 0) return null;
+  return { soilType, moistureContent, features };
+}
 
 function HistoryPage() {
   const { user } = useAuthUser();
@@ -57,7 +67,7 @@ function HistoryPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("captures")
-        .select("id, storage_path, latitude, longitude, prediction, created_at")
+        .select("id, storage_path, latitude, longitude, prediction, note, created_at")
         .order("created_at", { ascending: false })
         .limit(200);
       if (error) throw error;
@@ -65,7 +75,7 @@ function HistoryPage() {
       const signed = await Promise.all(
         rows.map(async (r) => {
           const { data: s } = await supabase.storage.from("captures").createSignedUrl(r.storage_path, 3600);
-          return { ...r, url: s?.signedUrl ?? "" };
+          return { ...r, url: s?.signedUrl ?? "", analysis: getCaptureAnalysis(r.prediction, r.note) };
         }),
       );
       return signed;
@@ -77,9 +87,12 @@ function HistoryPage() {
       id: `cap-${cp.id}`,
       category: "capture",
       title: "Field photo",
-      detail: cp.prediction ?? (cp.latitude != null ? `GPS ${cp.latitude.toFixed(5)}, ${cp.longitude?.toFixed(5)}` : "No GPS"),
+       detail: cp.analysis
+         ? `${cp.analysis.soilType} · ${cp.analysis.moistureContent}`
+         : (cp.prediction ?? (cp.latitude != null ? `GPS ${cp.latitude.toFixed(5)}, ${cp.longitude?.toFixed(5)}` : "No GPS")),
       link: null,
       created_at: cp.created_at,
+       analysis: cp.analysis,
       capture: { path: cp.url, lat: cp.latitude, lng: cp.longitude },
     }));
     const all = [...(activity.data ?? []).filter((a) => a.category !== "capture"), ...captureRows];
@@ -167,6 +180,14 @@ function HistoryPage() {
                   </div>
                   <h3 className="text-grass-900 font-medium mt-1 break-words">{r.title}</h3>
                   {r.detail && <p className="text-sm text-grass-700 mt-1 line-clamp-3 break-words">{r.detail}</p>}
+                   {r.analysis && (
+                     <div className="mt-3 rounded-xl bg-grass-100/75 p-3 text-xs text-grass-800 space-y-1.5">
+                       <p><span className="font-semibold">Soil type:</span> {r.analysis.soilType}</p>
+                       <p><span className="font-semibold">Moisture content:</span> {r.analysis.moistureContent}</p>
+                       <p><span className="font-semibold">Photo features:</span> {r.analysis.features.join(" • ")}</p>
+                       <p className="text-[10px] text-grass-600">Visual estimate only; confirm with a soil test or moisture sensor.</p>
+                     </div>
+                   )}
                   <div className="mt-2 flex flex-wrap gap-3 text-xs">
                     {r.link && <a href={r.link} className="story-link text-grass-800 font-semibold">Revisit</a>}
                     {r.capture?.path && (
