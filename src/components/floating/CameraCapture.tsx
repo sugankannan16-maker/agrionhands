@@ -115,6 +115,7 @@ export default function CameraCapture() {
     setProgress(55);
 
     let captureAnalysis: CaptureAnalysis | null = null;
+    let captureAnalysisError: string | null = null;
     try {
       const { data: sessionData } = await supabase.auth.getSession();
       const token = sessionData.session?.access_token;
@@ -132,13 +133,16 @@ export default function CameraCapture() {
           }
         } else {
           const detail = (await analysisResponse.text()).trim();
-          setAnalysisError(detail || "Image analysis failed.");
+          captureAnalysisError = detail || "Image analysis failed.";
+          setAnalysisError(captureAnalysisError);
         }
       } else {
-        setAnalysisError("Image analysis needs an active sign-in session.");
+        captureAnalysisError = "Image analysis needs an active sign-in session.";
+        setAnalysisError(captureAnalysisError);
       }
     } catch {
-      setAnalysisError("Image analysis is temporarily unavailable. The photo was still saved.");
+      captureAnalysisError = "Image analysis is temporarily unavailable. The photo was still saved.";
+      setAnalysisError(captureAnalysisError);
     }
     setProgress(80);
 
@@ -170,9 +174,8 @@ export default function CameraCapture() {
       link: "/history",
     });
     setPhase("done");
-    setMessage("Photo uploaded and saved to your history.");
-    if (analysisError) setMessage(`Photo saved. Analysis unavailable: ${analysisError}`);
-  }, [user, coords, stopStream, analysisError]);
+    setMessage(captureAnalysisError ? `Photo saved. Analysis unavailable: ${captureAnalysisError}` : "Photo uploaded and saved to your history.");
+  }, [user, coords, stopStream]);
 
   const close = () => {
     stopStream();
