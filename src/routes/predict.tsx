@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import Reveal from "@/components/nature/Reveal";
 import { useSite } from "@/site/SiteProvider";
-import { PageHeader } from "@/components/site/Chrome";
+import { PageHeader, LangToggle } from "@/components/site/Chrome";
 import { cropData, cropBaselines } from "@/data/crops";
 import { logActivity } from "@/lib/activity";
 

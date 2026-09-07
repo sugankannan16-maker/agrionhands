@@ -23,7 +23,7 @@ export function Logo({ size = "md" }: { size?: "sm" | "md" }) {
 }
 
 
-function LangToggle() {
+export function LangToggle() {
   const { lang, setLang } = useSite();
   return (
     <div className="inline-flex items-center rounded-full bg-grass-100 p-1 text-xs font-semibold" role="group" aria-label="Language">
