@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import Reveal from "@/components/nature/Reveal";
 import { useSite } from "@/site/SiteProvider";
-import { PageHeader } from "@/components/site/Chrome";
+import { PageHeader, LangToggle } from "@/components/site/Chrome";
 import { cropData, cropBaselines } from "@/data/crops";
 import { logActivity } from "@/lib/activity";
 
@@ -94,6 +94,12 @@ function PredictPage() {
     <section className="py-14 md:py-20">
       <div className="container-page">
         <PageHeader kicker={c.predict.kicker} heading={c.predict.heading} sub={c.predict.sub} />
+        <div className="flex items-center gap-3 mt-4">
+          <span className="text-[11px] font-semibold uppercase tracking-widest text-grass-600">
+            {lang === "ta" ? "மொழி" : lang === "hi" ? "भाषा" : "Language"}
+          </span>
+          <LangToggle />
+        </div>
 
         <Reveal>
           <div className="grid lg:grid-cols-[1.35fr_1fr] gap-6">
